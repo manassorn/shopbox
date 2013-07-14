@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Shop Box</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_sell">SellActivity</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="selling">+การขาย</string>
+    <string name="sell">ขาย</string>
+    <string name="return1">คืน</string>
+    <string name="inventory">+คลังสินค้า</string>
+    <string name="add_product">รับสินค้า</string>
+    <string name="product_amount">จำนวนสินค้า</string>
+    <string name="product_count">นับสินค้า</string>
+    <string name="product_miss">เกิน/หาย</string>
+    <string name="cash">+เงินสด</string>
+    <string name="deposit_withdraw">เงินเกิน/หาย</string>
+    <string name="cash_count">นับเงิน</string>
+    <string name="cash_miss">เงินเกิน/หาย</string>
+    <string name="other">+อื่นๆ</string>
+    <string name="report">รายงาน</string>
+    <string name="stat">สถิติ</string>
+    <string name="manager">ผู้จัดการ</string>
+    <string name="wait_sync">รอ sync</string>
+    <string name="discount">ส่วนลด</string>
+    <string name="markup">ส่วนเพิ่ม</string>
+
+    <string-array name="drawer_nav_array">
+        <item>@string/selling</item>
+        <item>@string/sell</item>
+        <item>@string/return1</item>
+        <item>@string/inventory</item>
+        <item>@string/add_product</item>
+        <item>@string/product_amount</item>
+        <item>@string/product_count</item>
+        <item>@string/product_miss</item>
+        <item>@string/cash</item>
+        <item>@string/deposit_withdraw</item>
+        <item>@string/cash_count</item>
+        <item>@string/cash_miss</item>
+        <item>@string/other</item>
+        <item>@string/report</item>
+        <item>@string/stat</item>
+        <item>@string/manager</item>
+        <item>@string/wait_sync</item>
+    </string-array>
+
+    <string name="sell_product">ขายสินค้า</string>
+    <string name="selling_today">รายการขายวินนี้</string>
+
+    <string-array name="sell_menu_array">
+        <item>@string/sell_product</item>
+        <item>@string/selling_today</item>
+    </string-array>
+
+    <string name="title_activity_billing">BillingActivity</string>
+    <string name="title_activity_enter_barcode">EnterBarcodeActivity</string>
+    <string name="title_activity_receive_money">ReceiveMoneyActivity</string>
+    <string name="title_activity_give_change">GiveChangeActivity</string>
+    <string name="title_activity_finalize_price">FinalizePriceActivity</string>
+    <string name="title_activity_view_bill">ViewBillActivity</string>
+    <string name="empty_receive_money_input">ช่องรับเงินว่างเปล่า</string>
+    <string name="receive_money_less_than_total">จำนวนเงินไม่เพียงพอ</string>
+    <string name="title_activity_today_bill">TodayBillActivity</string>
+
+</resources>

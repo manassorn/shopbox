@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/product_grid_background" >
+    
+    <TableLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <TableRow>
+			<ImageView
+			  android:id="@+id/category_image_1"
+			  android:layout_width="0dp"
+			  android:layout_height="wrap_content"
+			  android:layout_weight="0.5"
+			  android:layout_margin="1dp"
+			  android:adjustViewBounds="true" />
+	        
+			<ImageView
+			  android:id="@+id/category_image_2"
+			  android:layout_width="0dp"
+			  android:layout_height="wrap_content"
+			  android:layout_weight="0.5"
+			  android:layout_margin="1dp"
+			  android:adjustViewBounds="true" />
+        </TableRow>
+        
+        <TableRow>
+			<ImageView
+			  android:id="@+id/category_image_3"
+			  android:layout_width="0dp"
+			  android:layout_height="wrap_content"
+			  android:layout_weight="0.5"
+			  android:layout_margin="1dp"
+			  android:adjustViewBounds="true" />
+	        
+			<ImageView
+			  android:id="@+id/category_image_4"
+			  android:layout_width="0dp"
+			  android:layout_height="wrap_content"
+			  android:layout_weight="0.5"
+			  android:layout_margin="1dp"
+			  android:adjustViewBounds="true" />
+        </TableRow>
+    </TableLayout>
+
+    <TextView 
+        android:id="@+id/category_name"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_gravity="bottom"
+        android:background="#ffffff"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:text="Original Painting 16x20 Oil on Canvas Florida..." />"
+</LinearLayout>

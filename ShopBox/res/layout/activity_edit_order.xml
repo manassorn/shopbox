@@ -1,0 +1,82 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditOrderActivity" >
+    
+    <FrameLayout 
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="#dddddd"
+        android:animateLayoutChanges="true" >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+		    <Button
+		        android:id="@+id/markup_button"
+		        style="?android:attr/buttonStyleSmall"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+		        android:text="฿+" />
+		    <Button
+		        android:id="@+id/discount_button"
+		        style="?android:attr/buttonStyleSmall"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:layout_toRightOf="@id/markup_button"
+		        android:text="฿-" />
+		    <Button
+		        android:id="@+id/pay_button"
+		        style="?android:attr/buttonStyleSmall"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:layout_alignParentRight="true"
+		        android:text="ชำระเงิน >" />
+	        <TextView
+	            android:id="@+id/total"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:layout_toLeftOf="@id/pay_button" />
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:layout_toLeftOf="@id/total"
+	            android:layout_marginRight="8sp"
+	            android:text="รวม" />
+        </RelativeLayout>
+        <FrameLayout
+            android:id="@+id/selected_item_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#dddddd"
+            android:visibility="gone">
+            <Button 
+                android:id="@+id/clear_selected_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+	        	style="?android:attr/buttonStyleSmall"
+	        	android:text="ยกเลิก" />
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+	        	style="?android:attr/buttonStyleSmall"
+	        	android:layout_gravity="right"
+	        	android:drawableLeft="@android:drawable/ic_menu_delete" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <ListView 
+        android:id="@+id/final_product_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:layout_above="@id/footer" />
+</RelativeLayout>

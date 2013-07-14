@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_product_grid"
+        android:icon="@drawable/product_grid_icon"
+        android:showAsAction="ifRoom|withText"
+        android:title="Product Grid"/>
+
+</menu>

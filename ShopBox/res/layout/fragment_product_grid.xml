@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ededed">
+    
+    <LinearLayout
+        android:id="@+id/no_product_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/product_icon_96" />
+        
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:textSize="20sp"
+	        android:text="ไม่มีสินค้า" />
+        
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:text="ลองเพิ่มสินค้านะจ๊ะ " />
+	    
+	    <Button
+	        android:id="@+id/new_product_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10dp"
+	        android:layout_gravity="center"
+	        android:text="เพิ่มสินค้า" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/product_grid_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="8dp"
+		android:paddingRight="8dp"
+        android:orientation="vertical">
+    
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        >
+	        
+	        <Button
+	            android:id="@+id/category_back_icon"
+	        	style="?android:attr/buttonStyleSmall"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginRight="8dp"
+	            android:drawableLeft="@drawable/arrow_up_left"
+	            android:visibility="gone" />
+	        <TextView
+	            android:id="@+id/category_name"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_toRightOf="@id/category_back_icon"
+	            android:layout_centerVertical="true"
+	            android:textSize="20sp"
+	            android:text="หมวดหมู่" />
+	        <ImageView
+	        	style="?android:attr/buttonStyleSmall"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible" />
+	    </RelativeLayout>
+    
+		<GridView
+		    android:id="@+id/product_grid"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:layout_below="@id/category_name"
+		    android:clickable="true"
+		    android:numColumns="auto_fit"
+		    android:columnWidth="90dp"
+		    android:horizontalSpacing="6dp"
+		    android:verticalSpacing="6dp"
+		    android:stretchMode="columnWidth" />  
+    </LinearLayout>
+    
+</FrameLayout>

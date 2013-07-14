@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true" >    
+    
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="150sp">
+	    <SurfaceView 
+	        android:id="@+id/camera_preview"
+	        android:layout_width="match_parent"
+	        android:layout_height="300sp"
+	        android:layout_gravity="top" />
+        <View
+            android:id="@+id/barcode_laser"
+            android:layout_width="match_parent"
+            android:layout_height="25sp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/barcode_laser"
+            android:visibility="gone" />
+    </FrameLayout>
+	
+	    <!--
+	    android:background="?android:attr/activatedBackgroundIndicator" 
+	     -->
+    
+    <Button 
+        android:id="@+id/barcode_push_button"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="กดค้างเพื่อสแกน" />
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Cancel" />
+        <EditText 
+            android:id="@+id/search_barcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/cancel_button"
+            android:layout_margin="5dp"
+            android:background="@drawable/search_background"
+            android:drawableLeft="@android:drawable/ic_menu_search"
+            android:singleLine="true"
+            android:hint="พิมพ์บาร์โค้ด"/>
+    </RelativeLayout>
+
+</LinearLayout>

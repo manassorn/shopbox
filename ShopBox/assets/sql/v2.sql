@@ -1,0 +1,1 @@
+ALTER TABLE Bill ADD Total real default 0;

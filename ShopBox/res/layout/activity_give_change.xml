@@ -1,0 +1,113 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ReceiveMoneyActivity"
+    android:stretchColumns="1" >
+	
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+        	android:padding="@dimen/activity_vertical_margin"
+	        android:text="รวม" />
+	    <TextView
+	        android:id="@+id/total"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:paddingRight="@dimen/activity_vertical_margin"
+	        android:gravity="right"
+	        android:text="" />
+    </TableRow>
+	
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dee0e0">
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="1dp"
+	        android:layout_span="2" />
+    </TableRow>
+	
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+        	android:padding="@dimen/activity_vertical_margin"
+	        android:text="รับ" />
+	    <TextView
+	        android:id="@+id/receive_money"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+        	android:padding="@dimen/activity_vertical_margin"
+	        android:layout_gravity="right"
+	        android:text="" />
+    </TableRow>
+	
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dee0e0">
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="1dp"
+	        android:layout_span="2" />
+    </TableRow>
+	
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+        	android:padding="@dimen/activity_vertical_margin"
+	        android:text="ทอน" />
+	    <TextView
+	        android:id="@+id/change"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+        	android:padding="@dimen/activity_vertical_margin"
+	        android:gravity="right"
+	        android:text="" />
+    </TableRow>
+	
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dee0e0">
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="1dp"
+	        android:layout_span="2" />
+    </TableRow>
+	
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+	    <Button
+	        android:id="@+id/complete_button"
+	        android:layout_width="wrap_content" 
+	        android:layout_height="wrap_content"
+	        android:layout_span="2"
+	        android:layout_gravity="center"
+	        android:text="เรียบร้อย"/>
+    </TableRow>
+	
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+	    <Button
+	        android:id="@+id/view_bill_button"
+	        android:layout_width="wrap_content" 
+	        android:layout_height="wrap_content"
+	        android:layout_span="2"
+	        android:layout_gravity="center"
+	        android:text="ดูใบเสร็จ"/>
+    </TableRow>
+
+</TableLayout>
