@@ -75,6 +75,10 @@
             android:name="com.manassorn.shopbox.TodayBillActivity"
             android:label="@string/title_activity_today_bill" >
         </activity>
+        <activity
+            android:name="com.manassorn.shopbox.ReturnOptionMenuActivity"
+            android:label="@string/title_activity_return_option_menu" >
+        </activity>
     </application>
 
 </manifest>

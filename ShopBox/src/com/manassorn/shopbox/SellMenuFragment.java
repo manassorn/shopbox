@@ -12,18 +12,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class SellNavFragment extends Fragment {
+public class SellMenuFragment extends Fragment {
     private ListView mSellMenuList;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_sell_nav, container, false);
+        View rootView = inflater.inflate(R.layout.menu_list, container, false);
 		getActivity().setTitle(getResources().getString(R.string.selling));
         
         // content
 		String[] sellMenus = getResources().getStringArray(R.array.sell_menu_array);
-        mSellMenuList = (ListView) rootView.findViewById(R.id.sell_menu);
+        mSellMenuList = (ListView) rootView.findViewById(R.id.menu_list);
         mSellMenuList.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.menu_list_item, sellMenus));
         mSellMenuList.setOnItemClickListener(new SellMenuItemClickListener());
         getActivity().setTitle(R.string.sell);

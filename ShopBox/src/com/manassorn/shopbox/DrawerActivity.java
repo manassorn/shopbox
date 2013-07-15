@@ -21,7 +21,6 @@ import android.widget.TextView;
 public class DrawerActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private String[] navs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +39,6 @@ public class DrawerActivity extends Activity {
         // drawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        navs = getResources().getStringArray(R.array.drawer_nav_array);
-//        mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, navs));
-        mDrawerList.setAdapter(new DrawerListArrayAdapter(this, navs));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
 
     @Override
@@ -57,24 +51,13 @@ public class DrawerActivity extends Activity {
 	            return super.onOptionsItemSelected(item);
 	    }
     }
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
+    
+    protected ListView getDrawerListView() {
+    	return mDrawerList;
     }
-
-    private void selectItem(int position) {
-        // update the main content by replacing fragments
-        Fragment fragment = null;
-        switch(position) {
-        	default: fragment = new SellNavFragment();
-        }
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-		mDrawerLayout.closeDrawer(mDrawerList);
-    	
+    
+    protected DrawerLayout getDrawerLayout() {
+    	return mDrawerLayout;
     }
     
     public static class DrawerListArrayAdapter extends ArrayAdapter<String> {

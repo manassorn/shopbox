@@ -53,6 +53,14 @@
         <item>@string/sell_product</item>
         <item>@string/selling_today</item>
     </string-array>
+    <string-array name="return_menu_array">
+        <item>คืนสินค้า</item>
+        <item>รายการคืนวันนี้</item>
+    </string-array>
+    <string-array name="return_option_menu_array">
+        <item>คืนด้วยใบเสร็จ</item>
+        <item>คืนไม่มีใบเสร็จ</item>
+    </string-array>
 
     <string name="title_activity_billing">BillingActivity</string>
     <string name="title_activity_enter_barcode">EnterBarcodeActivity</string>
@@ -63,5 +71,6 @@
     <string name="empty_receive_money_input">ช่องรับเงินว่างเปล่า</string>
     <string name="receive_money_less_than_total">จำนวนเงินไม่เพียงพอ</string>
     <string name="title_activity_today_bill">TodayBillActivity</string>
+    <string name="title_activity_return_option_menu">ReturnOptionMenuActivity</string>
 
 </resources>
