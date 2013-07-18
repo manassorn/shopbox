@@ -1,12 +1,13 @@
 package com.manassorn.shopbox;
 
+import java.util.List;
+
 import android.app.Fragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,9 +20,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.manassorn.shopbox.R;
-import com.manassorn.shopbox.data.CategoryDbAdapter;
-import com.manassorn.shopbox.data.ProductDbAdapter;
+import com.manassorn.shopbox.db.CategoryDbAdapter;
+import com.manassorn.shopbox.db.Dao;
+import com.manassorn.shopbox.db.DaoManager;
+import com.manassorn.shopbox.db.ProductDbAdapter;
 import com.manassorn.shopbox.value.Category;
 import com.manassorn.shopbox.value.Product;
 
@@ -100,6 +102,10 @@ public class ProductGridFragment extends Fragment implements OnItemClickListener
 		categoryText.setText(category.getName());
 
 		// products & child categories
+//		Dao<Product, Integer> dao = DaoManager.createDao(Product.class);
+//		List<Product> productList = dao.queryForEq("CategoryId", categoryId);
+//		products = productList.toArray(new Product[productList.size()]);
+		
 		cursor = productDbAdapter.queryByCategoryId(categoryId);
 		products = ProductDbAdapter.cursorToProduct(cursor);
 		cursor = categoryDbAdapter.queryByParentId(categoryId);

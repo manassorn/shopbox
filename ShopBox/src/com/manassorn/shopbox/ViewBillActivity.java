@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.manassorn.shopbox.R;
 import com.manassorn.shopbox.ConfirmBillActivity.BillArrayAdapter;
-import com.manassorn.shopbox.data.BillDbAdapter;
+import com.manassorn.shopbox.db.BillDbAdapter;
 import com.manassorn.shopbox.value.Bill;
 
 public class ViewBillActivity extends Activity {

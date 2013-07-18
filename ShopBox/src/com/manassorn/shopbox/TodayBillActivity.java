@@ -13,7 +13,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.manassorn.shopbox.R;
-import com.manassorn.shopbox.data.BillDbAdapter;
+import com.manassorn.shopbox.db.BillDbAdapter;
 import com.manassorn.shopbox.utils.DateUtils;
 
 public class TodayBillActivity extends Activity {

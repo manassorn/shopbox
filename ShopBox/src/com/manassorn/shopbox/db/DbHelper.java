@@ -1,4 +1,4 @@
-package com.manassorn.shopbox.data;
+package com.manassorn.shopbox.db;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,6 +27,10 @@ public class DbHelper extends SQLiteOpenHelper {
 	// private static final String BILL_PRODUCT_ITEM_NAME = "BillProductItem";
 	// private static final String Bill_SUPPLEMENT_ITEM_NAME =
 	// "BillSupplementItem";
+	
+	public static DbHelper getHelper(Context context) {
+		return new DbHelper(context);
+	}
 
 	public DbHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -1,4 +1,4 @@
-package com.manassorn.shopbox.data;
+package com.manassorn.shopbox.db;
 
 import android.content.Context;
 import android.database.Cursor;

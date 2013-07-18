@@ -3,7 +3,10 @@ package com.manassorn.shopbox.value;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.manassorn.shopbox.db.DatabaseField;
+
 public class BillSubTotalItem extends BillItem {
+	@DatabaseField
 	private double subTotal;
 	
 	public BillSubTotalItem() {

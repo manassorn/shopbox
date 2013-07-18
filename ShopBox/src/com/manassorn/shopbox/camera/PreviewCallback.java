@@ -63,7 +63,6 @@ final class PreviewCallback implements Camera.PreviewCallback {
 //		dst.compress(Bitmap.CompressFormat.PNG, 100, stream);
 //		data = stream.toByteArray();
 	    
-		Log.d(TAG, ">>>onPreviewFrame");
 		Point cameraResolution = configManager.getCameraResolution();
 		Handler thePreviewHandler = previewHandler;
 		if (cameraResolution != null && thePreviewHandler != null) {

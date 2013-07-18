@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.app.Fragment;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +15,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
@@ -24,7 +24,6 @@ import android.widget.EditText;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
-import com.manassorn.shopbox.R;
 import com.manassorn.shopbox.camera.CameraManager;
 
 public class ScanBarcodeFragment extends Fragment implements OnTouchListener, Callback, OnFocusChangeListener {
@@ -60,33 +59,35 @@ public class ScanBarcodeFragment extends Fragment implements OnTouchListener, Ca
 			handler.quitSynchronously();
 			handler = null;
 		}
-//		cameraManager.closeDriver();
-//		if (!hasSurface) {
-//			SurfaceView surfaceView = (SurfaceView) getView().findViewById(R.id.camera_preview);
-//			SurfaceHolder surfaceHolder = surfaceView.getHolder();
-//			surfaceHolder.removeCallback(this);
-//		}
+		cameraManager.closeDriver();
+		if (!hasSurface) {
+			SurfaceView surfaceView = (SurfaceView) getView().findViewById(R.id.camera_preview);
+			SurfaceHolder surfaceHolder = surfaceView.getHolder();
+			surfaceHolder.removeCallback(this);
+		}
 		super.onPause();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-//		cameraManager = new CameraManager(getActivity().getApplication());
-//
-//		SurfaceView surfaceView = (SurfaceView) getView().findViewById(R.id.camera_preview);
-//		SurfaceHolder surfaceHolder = surfaceView.getHolder();
-//		if (hasSurface) {
-//			// The activity was paused but not stopped, so the surface still
-//			// exists. Therefore
-//			// surfaceCreated() won't be called, so init the camera here.
-//			initCamera(surfaceHolder);
-//		} else {
-//			// Install the callback and wait for surfaceCreated() to init the
-//			// camera.
-//			surfaceHolder.addCallback(this);
-//			surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-//		}
+		cameraManager = new CameraManager(getActivity().getApplication());
+
+		SurfaceView surfaceView = (SurfaceView) getView().findViewById(R.id.camera_preview);
+		SurfaceHolder surfaceHolder = surfaceView.getHolder();
+//		Drawable drawable = getResources().getDrawable(R.drawable.sample_barcode);
+//		surfaceView.setBackground(drawable);
+		if (hasSurface) {
+			// The activity was paused but not stopped, so the surface still
+			// exists. Therefore
+			// surfaceCreated() won't be called, so init the camera here.
+			initCamera(surfaceHolder);
+		} else {
+			// Install the callback and wait for surfaceCreated() to init the
+			// camera.
+			surfaceHolder.addCallback(this);
+			surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		}
 
 		beepManager.updatePrefs();
 	}
@@ -121,6 +122,7 @@ public class ScanBarcodeFragment extends Fragment implements OnTouchListener, Ca
 		}
 		try {
 			cameraManager.openDriver(surfaceHolder);
+			cameraManager.setTorch(false);
 			// Creating the handler starts the preview, which can also throw a
 			// RuntimeException.
 			if (handler == null) {

@@ -44,6 +44,7 @@
         <item>@string/stat</item>
         <item>@string/manager</item>
         <item>@string/wait_sync</item>
+        <item>Developer</item>
     </string-array>
 
     <string name="sell_product">ขายสินค้า</string>
@@ -60,6 +61,9 @@
     <string-array name="return_option_menu_array">
         <item>คืนด้วยใบเสร็จ</item>
         <item>คืนไม่มีใบเสร็จ</item>
+    </string-array>
+    <string-array name="developer_menu_array">
+        <item>camera</item>
     </string-array>
 
     <string name="title_activity_billing">BillingActivity</string>

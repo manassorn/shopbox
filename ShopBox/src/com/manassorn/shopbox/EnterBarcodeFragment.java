@@ -17,7 +17,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.manassorn.shopbox.R;
-import com.manassorn.shopbox.data.ProductDbAdapter;
+import com.manassorn.shopbox.db.ProductDbAdapter;
 
 public class EnterBarcodeFragment extends Fragment implements TextWatcher, OnClickListener {
 	private ProductDbAdapter dbAdapter;

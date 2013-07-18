@@ -1,4 +1,4 @@
-package com.manassorn.shopbox.data;
+package com.manassorn.shopbox.db;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
