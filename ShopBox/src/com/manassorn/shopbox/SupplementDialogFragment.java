@@ -9,13 +9,13 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.manassorn.shopbox.db.SupplementDbAdapter;
+import com.manassorn.shopbox.db.Dao;
+import com.manassorn.shopbox.db.DbHelper;
 import com.manassorn.shopbox.value.Supplement;
 
 public class SupplementDialogFragment extends DialogFragment implements
@@ -23,10 +23,10 @@ public class SupplementDialogFragment extends DialogFragment implements
 	private static final String TAG = SupplementDialogFragment.class.getSimpleName();
 	private OnClickListener listener;
 	private AlertDialog alertDialog;
-	private SupplementDbAdapter dbAdapter;
-	private Supplement[] supplements;
+	private List<Supplement> supplements;
 	private String[] supplementLabels = new String[0];
-	List<Supplement> disabledSupplements;
+	protected List<Supplement> disabledSupplements;
+	private Dao<Supplement, Integer> dao;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -58,15 +58,6 @@ public class SupplementDialogFragment extends DialogFragment implements
 		return alertDialog;
 	}
 
-	@Override
-	public void onDetach() {
-		super.onDetach();
-		super.onDestroyView();
-		if (dbAdapter != null) {
-			dbAdapter.close();
-		}
-	}
-
 	public interface OnClickListener {
 		public void onDiscountDialogClick(DialogFragment dialog, Supplement discount);
 	}
@@ -74,28 +65,28 @@ public class SupplementDialogFragment extends DialogFragment implements
 	@Override
 	public void onClick(DialogInterface dialog, int index) {
 		if (listener != null) {
-			listener.onDiscountDialogClick(SupplementDialogFragment.this, supplements[index]);
+			listener.onDiscountDialogClick(SupplementDialogFragment.this, supplements.get(index));
 		}
 	}
 	
-	protected SupplementDbAdapter getDbAdapter() {
-		return dbAdapter;
+	protected Dao<Supplement, Integer> getDao() {
+		if(dao == null) {
+			dao = DbHelper.getHelper(getActivity()).getSupplementDao();
+		}
+		return dao;
 	}
 
 	private void initData() {
-		dbAdapter = new SupplementDbAdapter(getActivity());
-		dbAdapter.open();
-		Cursor cursor = querySupplement();
-		supplements = SupplementDbAdapter.cursorToSupplement(cursor);
-		supplementLabels = new String[supplements.length];
-		for (int i = 0; i < supplements.length; i++) {
-			Supplement supplement = supplements[i];
+		supplements = getSupplements();
+		supplementLabels = new String[supplements.size()];
+		for (int i = 0; i < supplements.size(); i++) {
+			Supplement supplement = supplements.get(i);
 			supplementLabels[i] = supplement.getName() + " " + supplement.formatValue();
 		}
 	}
 
-	protected Cursor querySupplement() {
-		return dbAdapter.querySupplement();
+	protected List<Supplement> getSupplements() {
+		return getDao().getForAll();
 	}
 
 	private boolean equalsList(List list1, List list2) {
@@ -108,9 +99,9 @@ public class SupplementDialogFragment extends DialogFragment implements
 
 	static class SupplementDialogAdapter extends ArrayAdapter<String> {
 		private List<Supplement> disabledSupplements;
-		private Supplement[] supplements;
+		private List<Supplement> supplements;
 
-		public SupplementDialogAdapter(Context context, String[] labels, Supplement[] supplements,
+		public SupplementDialogAdapter(Context context, String[] labels, List<Supplement> supplements,
 				List<Supplement> disabledSupplements) {
 			super(context, android.R.layout.simple_list_item_1, labels);
 			this.supplements = supplements;
@@ -126,7 +117,7 @@ public class SupplementDialogFragment extends DialogFragment implements
 
 		@Override
 		public boolean isEnabled(int position) {
-			return !disabledSupplements.contains(supplements[position]);
+			return !disabledSupplements.contains(supplements.get(position));
 		}
 
 		@Override

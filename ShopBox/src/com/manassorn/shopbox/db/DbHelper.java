@@ -13,12 +13,20 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.manassorn.shopbox.value.Category;
+import com.manassorn.shopbox.value.Product;
+import com.manassorn.shopbox.value.Supplement;
+
 public class DbHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "ShopBox";
 	private static final String SQL_DIR = "sql";
 	private static final int DATABASE_VERSION = 2;
+	private static DbHelper instance;
 	private Context context;
+	private Dao<Product, Integer> productDao;
+	private Dao<Category, Integer> categoryDao;
+	private Dao<Supplement, Integer> supplementDao;
 
 	// private static final String CATEGORY_TABLE_NAME = "category";
 	// private static final String PRODUCT_TABLE_NAME = "product";
@@ -27,14 +35,66 @@ public class DbHelper extends SQLiteOpenHelper {
 	// private static final String BILL_PRODUCT_ITEM_NAME = "BillProductItem";
 	// private static final String Bill_SUPPLEMENT_ITEM_NAME =
 	// "BillSupplementItem";
+	public static class ColumnName {
+		public static final String ID = "Id";
+		public static final String PARENT_ID = "ParentId";
+		public static final String NAME = "Name";
+		public static final String AMOUNT = "Amount";
+		public static final String PRICE = "Price";
+		public static final String CATEGORY_ID = "CategoryId";
+		public static final String BARCODE = "Barcode";
+		public static final String TYPE = "TYPE";
+		public static final String PERCENT = "PERCENT";
+		public static final String CONSTANT = "Constant";
+		public static final String PRIORITY = "Priority";
+		public static final String CREATED_TIME = "CreatedTime";
+		public static final String RECEIVE_MONEY = "ReceiveMoney";
+		public static final String BILL_ID = "BillId";
+		public static final String SEQUENCE = "Sequence";
+		public static final String PRODUCT_ID = "ProductId";
+		public static final String PRODUCT_NAME = "ProductName";
+		public static final String PRODUCT_PRICE = "ProductPrice";
+		public static final String TOTAL = "Total";
+		public static final String SUPPLEMENT_ID = "SupplementId";
+		public static final String SUPPLEMENT_NAME = "SupplementName";
+		public static final String SUPPLEMENT_PERCENT = "SupplementPercent";
+		public static final String SUPPLEMENT_CONSTANT = "SupplementConstant";
+		public static final String SUBTOTAL = "SubTotal";
+	}
 	
+	public static final int ROOT_CATEGORY_ID = 0;
+
 	public static DbHelper getHelper(Context context) {
-		return new DbHelper(context);
+		if (instance == null) {
+			instance = new DbHelper(context);
+		}
+		return instance;
 	}
 
 	public DbHelper(Context context) {
-		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		super(context.getApplicationContext(), DATABASE_NAME, null, DATABASE_VERSION);
 		this.context = context;
+	}
+
+	public Dao<Product, Integer> getProductDao() {
+		if (productDao == null) {
+			productDao = new Dao<Product, Integer>(this, Product.class);
+		}
+		return productDao;
+	}
+
+	public Dao<Category, Integer> getCategoryDao() {
+		if (categoryDao == null) {
+			categoryDao = new Dao<Category, Integer>(this, Category.class);
+		}
+		return categoryDao;
+	}
+
+	public Dao<Supplement, Integer> getSupplementDao() {
+		if (supplementDao == null) {
+			supplementDao = new Dao<Supplement, Integer>(this, Supplement.class);
+		}
+		return supplementDao;
 	}
 
 	@Override

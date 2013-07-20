@@ -1,12 +1,14 @@
 package com.manassorn.shopbox;
 
-import android.database.Cursor;
+import java.util.List;
+
+import com.manassorn.shopbox.value.Supplement;
 
 public class DiscountDialogFragment extends SupplementDialogFragment {
 
 	@Override
-	protected Cursor querySupplement() {
-		return getDbAdapter().queryDiscount();
+	protected List<Supplement> getSupplements() {
+		return getDao().queryBuilder().where("Percent < 0 or Constant < 0", null).get();
 	}
 
 }

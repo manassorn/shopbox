@@ -1,13 +1,14 @@
 package com.manassorn.shopbox;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,20 +21,17 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.manassorn.shopbox.db.CategoryDbAdapter;
 import com.manassorn.shopbox.db.Dao;
-import com.manassorn.shopbox.db.DaoManager;
-import com.manassorn.shopbox.db.ProductDbAdapter;
+import com.manassorn.shopbox.db.DbHelper;
 import com.manassorn.shopbox.value.Category;
 import com.manassorn.shopbox.value.Product;
 
 public class ProductGridFragment extends Fragment implements OnItemClickListener, OnClickListener {
+	private static final String TAG = ProductGridFragment.class.getSimpleName();
 	private Category category;
 	private Category[] childCategories;
 	private Product[][] childCategoryProducts;
 	private Product[] products;
-	private ProductDbAdapter productDbAdapter;
-	private CategoryDbAdapter categoryDbAdapter;
 	private View theView;
 
 	@Override
@@ -42,7 +40,7 @@ public class ProductGridFragment extends Fragment implements OnItemClickListener
 
 		View view = theView;
 
-		createView(CategoryDbAdapter.TOP_CATEGORY_ID);
+		createView(DbHelper.ROOT_CATEGORY_ID);
 
 		GridView gridview = (GridView) view.findViewById(R.id.product_grid);
 		gridview.setOnItemClickListener(this);
@@ -64,26 +62,6 @@ public class ProductGridFragment extends Fragment implements OnItemClickListener
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		productDbAdapter = new ProductDbAdapter(getActivity());
-		productDbAdapter.open();
-		categoryDbAdapter = new CategoryDbAdapter(getActivity());
-		categoryDbAdapter.open();
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		if (productDbAdapter != null) {
-			productDbAdapter.close();
-		}
-		if (categoryDbAdapter != null) {
-			categoryDbAdapter.close();
-		}
-	}
-
-	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		if (position < childCategories.length) {
 			createView(childCategories[position].getId());
@@ -96,32 +74,37 @@ public class ProductGridFragment extends Fragment implements OnItemClickListener
 	protected void createView(int categoryId) {
 		View view = theView;
 		// category
-		Cursor cursor = categoryDbAdapter.queryById(categoryId);
-		category = CategoryDbAdapter.cursorToCategory(cursor);
-		TextView categoryText = (TextView) view.findViewById(R.id.category_name);
-		categoryText.setText(category.getName());
-
-		// products & child categories
-//		Dao<Product, Integer> dao = DaoManager.createDao(Product.class);
-//		List<Product> productList = dao.queryForEq("CategoryId", categoryId);
-//		products = productList.toArray(new Product[productList.size()]);
+		DbHelper dbHelper = DbHelper.getHelper(getActivity());
+		Dao<Category, Integer> categoryDao = dbHelper.getCategoryDao();
 		
-		cursor = productDbAdapter.queryByCategoryId(categoryId);
-		products = ProductDbAdapter.cursorToProduct(cursor);
-		cursor = categoryDbAdapter.queryByParentId(categoryId);
-		childCategories = CategoryDbAdapter.cursorToCategoryArray(cursor);
+		try {
+			category = categoryDao.getForId(categoryId);
+			TextView categoryText = (TextView) view.findViewById(R.id.category_name);
+			categoryText.setText(category.getName());
+		} catch (SQLException e) {
+			Log.e(TAG, "Database exception", e);
+		}
+		Dao<Product, Integer> productDao = new Dao<Product, Integer>(DbHelper.getHelper(getActivity()),
+				Product.class);
+		List<Product> productList = productDao.getForEq("categoryId", categoryId);
+		products = productList.toArray(new Product[productList.size()]);
+
+		List<Category> categoryList = categoryDao.getForEq(DbHelper.ColumnName.PARENT_ID, categoryId);
+		childCategories = categoryList.toArray(new Category[categoryList.size()]);
 		childCategoryProducts = new Product[childCategories.length][];
-		for(int i=0; i<childCategoryProducts.length; i++) {
-			cursor = productDbAdapter.queryByCategoryId(childCategories[i].getId());
-			childCategoryProducts[i] = ProductDbAdapter.cursorToProduct(cursor);
+		for (int i = 0; i < childCategoryProducts.length; i++) {
+//			cursor = productDbAdapter.queryByCategoryId(childCategories[i].getId());
+//			childCategoryProducts[i] = ProductDbAdapter.cursorToProduct(cursor);
+			List<Product> list = productDao.getForEq("categoryId", childCategories[i].getId());
+			childCategoryProducts[i] = list.toArray(new Product[list.size()]);
 		}
 
 		GridView gridview = (GridView) view.findViewById(R.id.product_grid);
 		gridview.setAdapter(new ProductGridAdapter(getActivity(), childCategories,
 				childCategoryProducts, products));
-		
+
 		Button categoryBack = (Button) view.findViewById(R.id.category_back_icon);
-		if(categoryId == CategoryDbAdapter.TOP_CATEGORY_ID ) {
+		if (categoryId == DbHelper.ROOT_CATEGORY_ID) {
 			categoryBack.setVisibility(View.GONE);
 		} else {
 			categoryBack.setVisibility(View.VISIBLE);
@@ -203,7 +186,7 @@ public class ProductGridFragment extends Fragment implements OnItemClickListener
 					String path = context.getExternalFilesDir(null) + "/products/"
 							+ childProducts[i].getId() + ".jpg";
 					Bitmap bmp = BitmapFactory.decodeFile(path);
-					if(bmp != null) {
+					if (bmp != null) {
 						imageView.setImageBitmap(bmp);
 					} else {
 						imageView.setImageResource(R.drawable.no_product_image);
@@ -228,7 +211,7 @@ public class ProductGridFragment extends Fragment implements OnItemClickListener
 			String path = context.getExternalFilesDir(null) + "/products/" + product.getId()
 					+ ".jpg";
 			Bitmap bmp = BitmapFactory.decodeFile(path);
-			if(bmp != null) {
+			if (bmp != null) {
 				imageView.setImageBitmap(bmp);
 			} else {
 				imageView.setImageResource(R.drawable.no_product_image);

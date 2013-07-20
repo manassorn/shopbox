@@ -1,14 +1,29 @@
 package com.manassorn.shopbox.value;
 
+import com.manassorn.shopbox.db.DatabaseField;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Product implements Parcelable {
+	
+	@DatabaseField
 	private int amount;
+	
+	@DatabaseField(id=true)
 	private int id;
+	
+	@DatabaseField
 	private int categoryId;
+	
+	@DatabaseField
 	private double price;
+	
+	@DatabaseField
 	private String name;
+	
+	@DatabaseField
+	private String barcode;
 	
 	public Product() {
 		
@@ -42,6 +57,12 @@ public class Product implements Parcelable {
 	}
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+	public String getBarcode() {
+		return barcode;
+	}
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
 	}
 	@Override
 	public int describeContents() {

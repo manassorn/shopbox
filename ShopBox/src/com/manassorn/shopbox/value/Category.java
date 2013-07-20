@@ -1,8 +1,13 @@
 package com.manassorn.shopbox.value;
 
+import com.manassorn.shopbox.db.DatabaseField;
+
 public class Category {
+	@DatabaseField(id=true)
 	private int id;
+	@DatabaseField
 	private int parentId;
+	@DatabaseField
 	private String name;
 	public int getId() {
 		return id;

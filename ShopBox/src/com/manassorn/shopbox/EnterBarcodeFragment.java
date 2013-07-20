@@ -16,11 +16,9 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import com.manassorn.shopbox.R;
-import com.manassorn.shopbox.db.ProductDbAdapter;
+import com.manassorn.shopbox.db.DbHelper;
 
 public class EnterBarcodeFragment extends Fragment implements TextWatcher, OnClickListener {
-	private ProductDbAdapter dbAdapter;
 	private EditText searchView;
 	private ListView listView;
 	private String queryBarcode;
@@ -32,30 +30,21 @@ public class EnterBarcodeFragment extends Fragment implements TextWatcher, OnCli
 		searchView = (EditText) view.findViewById(R.id.search_barcode);
 		searchView.addTextChangedListener(this);
 
-		dbAdapter = new ProductDbAdapter(getActivity());
-		dbAdapter.open();
-
 		listView = (ListView) view.findViewById(R.id.product_list);
-		
+
 		Button cancel = (Button) view.findViewById(R.id.cancel_button);
 		cancel.setOnClickListener(this);
 
 		return view;
 	}
 
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		if (dbAdapter != null) {
-			dbAdapter.close();
-		}
-	}
-
 	private void queryBarcode(String barcode) {
 		queryBarcode = barcode;
-		Cursor cursor = dbAdapter.startsWithBarcode(barcode);
-		String[] from = new String[] { ProductDbAdapter.NAME, ProductDbAdapter.PRICE,
-				ProductDbAdapter.BARCODE };
+		// Cursor cursor = dbAdapter.startsWithBarcode(barcode);
+		DbHelper dbHelper = DbHelper.getHelper(getActivity());
+		Cursor cursor = dbHelper.getProductDao().queryBuilder().selectCursorId("id")
+				.like("barcode", barcode + "%").query();
+		String[] from = new String[] { "Name", "Price", "Barcode" };
 
 		int[] to = new int[] { R.id.product_name, R.id.product_price, R.id.product_barcode };
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(),
@@ -69,15 +58,15 @@ public class EnterBarcodeFragment extends Fragment implements TextWatcher, OnCli
 		@Override
 		public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
 			String columnName = cursor.getColumnName(columnIndex);
-			if (ProductDbAdapter.PRICE.equals(columnName)) {
+			if ("Price".equals(columnName)) {
 				String price = cursor.getString(columnIndex);
 				((TextView) view).setText("ß" + price);
 				return true;
-			} else if (ProductDbAdapter.BARCODE.equals(columnName)) {
+			} else if ("Barcode".equals(columnName)) {
 				String barcode = cursor.getString(columnIndex);
 				int queryLen = queryBarcode.length();
-				((TextView) view).setText(Html.fromHtml("<b>" + barcode.substring(0, queryLen) + "</b>"
-						+ barcode.substring(queryLen)));
+				((TextView) view).setText(Html.fromHtml("<b>" + barcode.substring(0, queryLen)
+						+ "</b>" + barcode.substring(queryLen)));
 				return true;
 			}
 			return false;
@@ -101,11 +90,11 @@ public class EnterBarcodeFragment extends Fragment implements TextWatcher, OnCli
 
 	@Override
 	public void onClick(View view) {
-		switch(view.getId()) {
+		switch (view.getId()) {
 			case R.id.cancel_button:
 				SelectProductActivity activity = (SelectProductActivity) getActivity();
 				activity.openScanBarcode();
 		}
-		
+
 	}
 }

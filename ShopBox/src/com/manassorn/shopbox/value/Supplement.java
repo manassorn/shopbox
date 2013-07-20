@@ -2,15 +2,23 @@ package com.manassorn.shopbox.value;
 
 import java.text.DecimalFormat;
 
+import com.manassorn.shopbox.db.DatabaseField;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Supplement implements Parcelable, Comparable<Supplement> {
+	@DatabaseField
 	private int id;
+	@DatabaseField
 	private SupplementType type;
+	@DatabaseField
 	private String name;
+	@DatabaseField
 	private double percent;
+	@DatabaseField
 	private double constant;
+	@DatabaseField
 	private int priority;
 
 	public enum SupplementType {
