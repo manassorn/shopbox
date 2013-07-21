@@ -16,11 +16,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class Dao<T, ID> {
+	public static final String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 	private static final String TAG = "Dao";
 	protected DbHelper dbHelper;
 	protected Class<T> clazz;
 	protected TableInfo<T, ID> tableInfo;
 	protected QueryBuilder queryBuilder;
+	
+	public static <T,ID> Dao<T,ID> createDao(DbHelper dbHelper, Class<T> clazz) {
+		return new Dao<T, ID>(dbHelper, clazz);
+	}
 
 	public Dao(DbHelper dbHelper, Class<T> clazz) {
 		this.dbHelper = dbHelper;
@@ -56,10 +61,10 @@ public class Dao<T, ID> {
 		} else if (fieldType == String.class) {
 			field.set(instance, cursor.getString(columnIndex));
 		} else if (fieldType == Date.class) {
-			SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat fmt = new SimpleDateFormat(dateTimeFormat);
 			Date date = null;
 			try {
-				date = dateTimeFormat.parse(cursor.getString(columnIndex));
+				date = fmt.parse(cursor.getString(columnIndex));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -162,6 +167,14 @@ public class Dao<T, ID> {
 
 	public List<T> getForAll() {
 		return mapRows(queryForAll());
+	}
+	
+	public int insert(List<T> list) throws SQLException {
+		int rows = 0;
+		for(T data : list) {
+			rows += insert(data);
+		}
+		return rows;
 	}
 
 	public int insert(T data) throws SQLException {

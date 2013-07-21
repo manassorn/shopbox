@@ -17,6 +17,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.manassorn.shopbox.db.DbHelper;
+import com.manassorn.shopbox.db.ProductDao;
 
 public class EnterBarcodeFragment extends Fragment implements TextWatcher, OnClickListener {
 	private EditText searchView;
@@ -40,11 +41,10 @@ public class EnterBarcodeFragment extends Fragment implements TextWatcher, OnCli
 
 	private void queryBarcode(String barcode) {
 		queryBarcode = barcode;
-		// Cursor cursor = dbAdapter.startsWithBarcode(barcode);
 		DbHelper dbHelper = DbHelper.getHelper(getActivity());
-		Cursor cursor = dbHelper.getProductDao().queryBuilder().selectCursorId("id")
-				.like("barcode", barcode + "%").query();
-		String[] from = new String[] { "Name", "Price", "Barcode" };
+		Cursor cursor = ProductDao.getInstance(dbHelper).queryForBarcodeStartsWith(barcode);
+
+		String[] from = new String[] { ProductDao.NAME, ProductDao.PRICE, ProductDao.BARCODE };
 
 		int[] to = new int[] { R.id.product_name, R.id.product_price, R.id.product_barcode };
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(),

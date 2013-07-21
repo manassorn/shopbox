@@ -37,6 +37,8 @@ public class CameraInfoActivity extends Activity implements SurfaceHolder.Callba
 			Camera.Parameters parameters = camera.getParameters();
 			sb.append("Camera Parameters: \n");
 			sb.append(parameters.flatten().replaceAll(";", "\n"));
+			
+			setCameraDisplayOrientation(this, cameraId, camera);
 		    
 		    SurfaceView surfaceView = (SurfaceView) findViewById(R.id.camera_preview);
 			SurfaceHolder surfaceHolder = surfaceView.getHolder();

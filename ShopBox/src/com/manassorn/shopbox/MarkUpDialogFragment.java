@@ -9,7 +9,7 @@ public class MarkUpDialogFragment extends SupplementDialogFragment {
 
 	@Override
 	protected List<Supplement> getSupplements() {
-		return getDao().queryBuilder().where("Percent > 0 or Constant > 0", null).get();
+		return getDao().getForMarkUp();
 	}
 
 }

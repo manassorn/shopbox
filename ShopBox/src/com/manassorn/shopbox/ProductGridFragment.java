@@ -21,8 +21,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.manassorn.shopbox.db.Dao;
+import com.manassorn.shopbox.db.CategoryDao;
 import com.manassorn.shopbox.db.DbHelper;
+import com.manassorn.shopbox.db.ProductDao;
 import com.manassorn.shopbox.value.Category;
 import com.manassorn.shopbox.value.Product;
 
@@ -40,7 +41,7 @@ public class ProductGridFragment extends Fragment implements OnItemClickListener
 
 		View view = theView;
 
-		createView(DbHelper.ROOT_CATEGORY_ID);
+		createView(CategoryDao.ROOT_CATEGORY_ID);
 
 		GridView gridview = (GridView) view.findViewById(R.id.product_grid);
 		gridview.setOnItemClickListener(this);
@@ -75,7 +76,7 @@ public class ProductGridFragment extends Fragment implements OnItemClickListener
 		View view = theView;
 		// category
 		DbHelper dbHelper = DbHelper.getHelper(getActivity());
-		Dao<Category, Integer> categoryDao = dbHelper.getCategoryDao();
+		CategoryDao categoryDao = CategoryDao.getInstance(dbHelper);
 		
 		try {
 			category = categoryDao.getForId(categoryId);
@@ -84,12 +85,11 @@ public class ProductGridFragment extends Fragment implements OnItemClickListener
 		} catch (SQLException e) {
 			Log.e(TAG, "Database exception", e);
 		}
-		Dao<Product, Integer> productDao = new Dao<Product, Integer>(DbHelper.getHelper(getActivity()),
-				Product.class);
-		List<Product> productList = productDao.getForEq("categoryId", categoryId);
+		ProductDao productDao = ProductDao.getInstance(dbHelper);
+		List<Product> productList = productDao.getForEq(ProductDao.CATEGORY_ID, categoryId);
 		products = productList.toArray(new Product[productList.size()]);
 
-		List<Category> categoryList = categoryDao.getForEq(DbHelper.ColumnName.PARENT_ID, categoryId);
+		List<Category> categoryList = categoryDao.getForEq(CategoryDao.PARENT_ID, categoryId);
 		childCategories = categoryList.toArray(new Category[categoryList.size()]);
 		childCategoryProducts = new Product[childCategories.length][];
 		for (int i = 0; i < childCategoryProducts.length; i++) {
@@ -104,7 +104,7 @@ public class ProductGridFragment extends Fragment implements OnItemClickListener
 				childCategoryProducts, products));
 
 		Button categoryBack = (Button) view.findViewById(R.id.category_back_icon);
-		if (categoryId == DbHelper.ROOT_CATEGORY_ID) {
+		if (categoryId == CategoryDao.ROOT_CATEGORY_ID) {
 			categoryBack.setVisibility(View.GONE);
 		} else {
 			categoryBack.setVisibility(View.VISIBLE);

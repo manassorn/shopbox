@@ -14,19 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.manassorn.shopbox.db.Dao;
 import com.manassorn.shopbox.db.DbHelper;
+import com.manassorn.shopbox.db.SupplementDao;
 import com.manassorn.shopbox.value.Supplement;
 
-public class SupplementDialogFragment extends DialogFragment implements
+public abstract class SupplementDialogFragment extends DialogFragment implements
 		DialogInterface.OnClickListener {
-	private static final String TAG = SupplementDialogFragment.class.getSimpleName();
+	private static final String TAG = "SupplementDialogFragment";
 	private OnClickListener listener;
 	private AlertDialog alertDialog;
 	private List<Supplement> supplements;
 	private String[] supplementLabels = new String[0];
 	protected List<Supplement> disabledSupplements;
-	private Dao<Supplement, Integer> dao;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -69,11 +68,9 @@ public class SupplementDialogFragment extends DialogFragment implements
 		}
 	}
 	
-	protected Dao<Supplement, Integer> getDao() {
-		if(dao == null) {
-			dao = DbHelper.getHelper(getActivity()).getSupplementDao();
-		}
-		return dao;
+	protected SupplementDao getDao() {
+		DbHelper dbHelper = DbHelper.getHelper(getActivity());
+		return SupplementDao.getInstance(dbHelper);
 	}
 
 	private void initData() {
@@ -85,9 +82,7 @@ public class SupplementDialogFragment extends DialogFragment implements
 		}
 	}
 
-	protected List<Supplement> getSupplements() {
-		return getDao().getForAll();
-	}
+	protected abstract List<Supplement> getSupplements();
 
 	private boolean equalsList(List list1, List list2) {
 		if (list1.size() != list2.size())

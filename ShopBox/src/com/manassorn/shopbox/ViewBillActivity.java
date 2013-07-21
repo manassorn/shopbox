@@ -1,19 +1,22 @@
 package com.manassorn.shopbox;
 
+import java.sql.SQLException;
+
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.manassorn.shopbox.R;
 import com.manassorn.shopbox.ConfirmBillActivity.BillArrayAdapter;
-import com.manassorn.shopbox.db.BillDbAdapter;
+import com.manassorn.shopbox.db.BillDao;
+import com.manassorn.shopbox.db.DbHelper;
 import com.manassorn.shopbox.value.Bill;
 
 public class ViewBillActivity extends Activity {
-	private BillDbAdapter billDbAdapter;
+	public static final String TAG = "ViewBillActivity";
 	private int billId;
 
 	@Override
@@ -27,25 +30,22 @@ public class ViewBillActivity extends Activity {
 		if (bundle != null) {
 			billId = bundle.getInt("BILL_ID");
 		}
-		billDbAdapter = new BillDbAdapter(this);
-		billDbAdapter.open();
 		
-		Bill bill = billDbAdapter.getBill(billId);
-		
-		ListView listView = (ListView) findViewById(R.id.product_list);
-		listView.setAdapter(new BillArrayAdapter(this, bill.getBillItems()));
-		
-		findViewById(R.id.confirm_button).setVisibility(View.GONE);
-		
-		TextView totalText = (TextView) findViewById(R.id.total);
-		totalText.setText(String.format("ß%,.2f", bill.getTotal()));
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if (billDbAdapter != null) {
-			billDbAdapter.close();
+		DbHelper dbHelper = DbHelper.getHelper(this);
+		BillDao dao = BillDao.getInstance(dbHelper);
+		Bill bill;
+		try {
+			bill = dao.getForId(billId);
+			
+			ListView listView = (ListView) findViewById(R.id.product_list);
+			listView.setAdapter(new BillArrayAdapter(this, bill.getBillItems()));
+			
+			findViewById(R.id.confirm_button).setVisibility(View.GONE);
+			
+			TextView totalText = (TextView) findViewById(R.id.total);
+			totalText.setText(String.format("ß%,.2f", bill.getTotal()));
+		} catch (SQLException e) {
+			Log.e(TAG, "Database Error", e);
 		}
 	}
 

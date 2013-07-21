@@ -17,9 +17,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.manassorn.shopbox.R;
-import com.manassorn.shopbox.db.BillDbAdapter;
-import com.manassorn.shopbox.value.Bill;
 import com.manassorn.shopbox.value.BillItem;
 import com.manassorn.shopbox.value.BillProductItem;
 import com.manassorn.shopbox.value.BillSubTotalItem;

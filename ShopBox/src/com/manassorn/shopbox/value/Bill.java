@@ -6,11 +6,18 @@ import java.util.Date;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.manassorn.shopbox.db.DatabaseField;
+
 public class Bill implements Parcelable {
+	@DatabaseField(id=true)
 	private int id;
+	@DatabaseField
 	private Date createdTime;
+	@DatabaseField
 	private double receiveMoney;
+	@DatabaseField
 	private double total;
+	@DatabaseField
 	private ArrayList<BillItem> billItems;
 
 	public Bill() {

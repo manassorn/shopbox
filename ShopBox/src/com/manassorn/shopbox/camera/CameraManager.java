@@ -16,17 +16,20 @@
 
 package com.manassorn.shopbox.camera;
 
+import java.io.IOException;
+
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Surface;
 import android.view.SurfaceHolder;
+
 import com.google.zxing.PlanarYUVLuminanceSource;
 import com.manassorn.shopbox.camera.open.OpenCameraManager;
-
-import java.io.IOException;
 
 /**
  * This object wraps the Camera service object and expects to be the only one talking to it. The
@@ -114,7 +117,7 @@ public final class CameraManager {
         }
       }
     }
-
+    setCameraDisplayOrientation((Activity) context);
   }
 
   public synchronized boolean isOpen() {
@@ -178,6 +181,32 @@ public final class CameraManager {
       }
     }
   }
+  
+  public void setCameraDisplayOrientation(Activity activity) {
+	  int cameraId = 0;
+	     Camera.CameraInfo info =
+	             new Camera.CameraInfo();
+	     Camera.getCameraInfo(cameraId, info);
+	     int rotation = activity.getWindowManager().getDefaultDisplay()
+	             .getRotation();
+	     int degrees = 0;
+	     switch (rotation) {
+	         case Surface.ROTATION_0: degrees = 0; break;
+	         case Surface.ROTATION_90: degrees = 90; break;
+	         case Surface.ROTATION_180: degrees = 180; break;
+	         case Surface.ROTATION_270: degrees = 270; break;
+	     }
+
+	     int result;
+	     if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+	         result = (info.orientation + degrees) % 360;
+	         result = (360 - result) % 360;  // compensate the mirror
+	     } else {  // back-facing
+	         result = (info.orientation - degrees + 360) % 360;
+	     }
+	     camera.setDisplayOrientation(result);
+	 }
+	 
 
   /**
    * A single preview frame will be returned to the handler supplied. The data will arrive as byte[]

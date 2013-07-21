@@ -1,10 +1,12 @@
 package com.manassorn.shopbox;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,16 +15,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.manassorn.shopbox.R;
-import com.manassorn.shopbox.db.BillDbAdapter;
+import com.manassorn.shopbox.db.BillDao;
+import com.manassorn.shopbox.db.BillItemDao;
+import com.manassorn.shopbox.db.Dao;
+import com.manassorn.shopbox.db.DbHelper;
 import com.manassorn.shopbox.value.Bill;
 import com.manassorn.shopbox.value.BillItem;
 
 public class ReceiveMoneyActivity extends Activity implements OnClickListener {
+	private static final String TAG = ReceiveMoneyActivity.class.getSimpleName();
 	private ArrayList<BillItem> billItems;
 	private int billId;
 	private double total = 0;
-	private BillDbAdapter billDbAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +44,6 @@ public class ReceiveMoneyActivity extends Activity implements OnClickListener {
 
 		TextView totalView = (TextView) findViewById(R.id.total);
 		totalView.setText(String.format("ß%,.2f", total));
-
-		billDbAdapter = new BillDbAdapter(this);
-		billDbAdapter.open();
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if (billDbAdapter != null) {
-			billDbAdapter.close();
-		}
 	}
 
 	@Override
@@ -89,7 +82,17 @@ public class ReceiveMoneyActivity extends Activity implements OnClickListener {
 	protected int insertBill() {
 		Bill bill = new Bill(billItems);
 		bill.setReceiveMoney(getReceiveMoney());
-		long billId = billDbAdapter.insertBill(bill);
+//		long billId = billDbAdapter.insertBill(bill);
+		DbHelper dbHelper = DbHelper.getHelper(this);
+		BillDao billDao = BillDao.getInstance(dbHelper);
+		BillItemDao billItemDao = BillItemDao.getInstance(dbHelper);
+		try {
+			billDao.insert(bill);
+			billItemDao.insert(billItems);
+		} catch (SQLException e) {
+			Log.e(TAG, "Database Error", e);
+		}
+		
 		return (int) billId;
 	}
 

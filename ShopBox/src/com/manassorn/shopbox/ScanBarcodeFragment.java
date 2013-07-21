@@ -20,6 +20,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
@@ -108,7 +109,7 @@ public class ScanBarcodeFragment extends Fragment implements OnTouchListener, Ca
 		// lastResult = rawResult;
 		String code = String.valueOf(rawResult);
 		beepManager.playBeepSoundAndVibrate();
-		Log.d(TAG, ">>>>>>>>Decode BARCODE success");
+		Toast.makeText(getActivity(), "Barcode: " + code, Toast.LENGTH_LONG);
 	}
 
 	private void initCamera(SurfaceHolder surfaceHolder) {

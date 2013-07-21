@@ -1,6 +1,7 @@
 package com.manassorn.shopbox;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.Activity;
@@ -12,12 +13,12 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import com.manassorn.shopbox.R;
-import com.manassorn.shopbox.db.BillDbAdapter;
+import com.manassorn.shopbox.db.BillDao;
+import com.manassorn.shopbox.db.Dao;
+import com.manassorn.shopbox.db.DbHelper;
 import com.manassorn.shopbox.utils.DateUtils;
 
 public class TodayBillActivity extends Activity {
-	private BillDbAdapter billDbAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,25 +27,15 @@ public class TodayBillActivity extends Activity {
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		billDbAdapter = new BillDbAdapter(this);
-		billDbAdapter.open();
-
-		Cursor cursor = billDbAdapter.queryTodayBill();
-		String[] from = new String[] { "Id", "Total", "CreatedTime" };
+		DbHelper dbHelper = DbHelper.getHelper(this);
+		Cursor cursor = BillDao.getInstance(dbHelper).queryForToday();
+		String[] from = new String[] { BillDao.ID, BillDao.TOTAL, BillDao.CREATED_TIME };
 		int[] to = new int[] { R.id.bill_id, R.id.bill_total, R.id.bill_created_time };
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.today_bill_list_item,
 				cursor, from, to, 0);
 		adapter.setViewBinder(new MyViewBinder());
 		ListView billListView = (ListView) findViewById(R.id.today_bill_list);
 		billListView.setAdapter(adapter);
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if (billDbAdapter != null) {
-			billDbAdapter.close();
-		}
 	}
 
 	@Override
@@ -69,7 +60,7 @@ public class TodayBillActivity extends Activity {
 				return true;
 			} else if ("CreatedTime".equals(columnName)) {
 				try {
-					Date date = BillDbAdapter.getDateTimeFormat().parse(
+					Date date = new SimpleDateFormat(Dao.dateTimeFormat).parse(
 							cursor.getString(columnIndex));
 					String friendlyDate = DateUtils.formatFriendly(TodayBillActivity.this, date);
 					((TextView) view).setText(friendlyDate);
