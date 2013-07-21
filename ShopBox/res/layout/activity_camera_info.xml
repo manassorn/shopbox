@@ -13,4 +13,11 @@
 	    android:background="#ffffff"
 	    android:maxLines="10"
 	    android:scrollbars="vertical" />
+
+	<Spinner
+	    android:id="@+id/camera_id_spinner"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="bottom" />
+
 </FrameLayout>
