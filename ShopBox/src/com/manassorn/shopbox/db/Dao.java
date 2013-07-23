@@ -10,20 +10,24 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import com.manassorn.shopbox.utils.SQLExceptionUtil;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class Dao<T, ID> {
-	public static final String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+	public static final String dateFormat = "yyyy-MM-dd";
+	public static final String timeFormat = "HH:mm:ss";
+	public static final String dateTimeFormat = dateFormat + " " + timeFormat;
 	private static final String TAG = "Dao";
 	protected DbHelper dbHelper;
 	protected Class<T> clazz;
 	protected TableInfo<T, ID> tableInfo;
 	protected QueryBuilder queryBuilder;
-	
-	public static <T,ID> Dao<T,ID> createDao(DbHelper dbHelper, Class<T> clazz) {
+
+	public static <T, ID> Dao<T, ID> createDao(DbHelper dbHelper, Class<T> clazz) {
 		return new Dao<T, ID>(dbHelper, clazz);
 	}
 
@@ -34,7 +38,7 @@ public class Dao<T, ID> {
 	}
 
 	public Cursor queryForId(ID id) throws SQLException {
-		if(tableInfo.getIdField() == null) {
+		if (tableInfo.getIdField() == null) {
 			throw new SQLException("Not found @DatabaseField(id=true) in " + clazz);
 		}
 		return queryForEq(tableInfo.getIdField(), id);
@@ -69,11 +73,11 @@ public class Dao<T, ID> {
 				e.printStackTrace();
 			}
 			field.set(instance, date);
-		} else if(fieldType.getEnumConstants() != null) {
+		} else if (fieldType.getEnumConstants() != null) {
 			String enumName = cursor.getString(columnIndex);
 			Enum<?>[] constants = (Enum<?>[]) fieldType.getEnumConstants();
 			for (Enum<?> enumVal : constants) {
-				if(enumVal.name().equals(enumName)) {
+				if (enumVal.name().equals(enumName)) {
 					field.set(instance, enumVal);
 				}
 			}
@@ -168,10 +172,10 @@ public class Dao<T, ID> {
 	public List<T> getForAll() {
 		return mapRows(queryForAll());
 	}
-	
+
 	public int insert(List<T> list) throws SQLException {
 		int rows = 0;
-		for(T data : list) {
+		for (T data : list) {
 			rows += insert(data);
 		}
 		return rows;
@@ -186,11 +190,11 @@ public class Dao<T, ID> {
 			try {
 				values.put(field.getName(), field.get(data).toString());
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw SQLExceptionUtil.create("Could not assign object '" + data + "' to field "
+						+ field.getName(), e);
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw SQLExceptionUtil.create("Could not assign object '" + data + "' to field "
+						+ field.getName(), e);
 			}
 		}
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -201,11 +205,11 @@ public class Dao<T, ID> {
 			db.close();
 		}
 	}
-	
+
 	public QueryBuilder queryBuilder() {
-//		if(queryBuilder == null) {
-//			queryBuilder = new QueryBuilder();
-//		}
+		// if(queryBuilder == null) {
+		// queryBuilder = new QueryBuilder();
+		// }
 		return new QueryBuilder();
 	}
 
@@ -213,36 +217,42 @@ public class Dao<T, ID> {
 		private String cursorIdColumnName;
 		private List<String> columnNames = new ArrayList<String>();
 		private Where where;
-		
+		private String groupBy;
+
 		public QueryBuilder selectCursorId(String columnName) {
 			cursorIdColumnName = columnName;
 			return this;
 		}
-		
+
 		public QueryBuilder select(String[] columnNames) {
 			this.columnNames.addAll(Arrays.asList(columnNames));
 			return this;
 		}
-		
+
 		public QueryBuilder select(String columnName) {
 			columnNames.add(columnName);
 			return this;
 		}
-		
+
 		public Where where() {
-			if(where == null) {
+			if (where == null) {
 				where = new Where();
 			}
 			return where;
 		}
-		
+
 		public QueryBuilder where(String sql, String[] args) {
 			where().raw(sql, args);
 			return this;
 		}
-		
+
 		public QueryBuilder like(String columnName, String args) {
 			where().like(columnName, args);
+			return this;
+		}
+
+		public QueryBuilder groupBy(String columnName) {
+			this.groupBy = columnName;
 			return this;
 		}
 
@@ -250,60 +260,69 @@ public class Dao<T, ID> {
 			String sql = build();
 			return Dao.this.query(sql, args());
 		}
-		
+
 		public List<T> get() {
 			String sql = build();
 			return Dao.this.get(sql, args());
 		}
-		
+
 		public String[] args() {
 			return where().args();
 		}
-		
+
 		public String build() {
 			StringBuilder sb = new StringBuilder();
 			sb.append("select ");
 			appendColumnNames(sb);
 			sb.append(" from ").append(tableInfo.getTableName());
-			sb.append(" ").append(where);
+			if(where != null) {
+				sb.append(" ").append(where);
+			}
+			if (groupBy != null) {
+				sb.append(" group by ").append(groupBy);
+			}
 			return sb.toString();
 		}
-		
+
 		protected void appendColumnNames(StringBuilder sb) {
 			StringBuilder columnNameSb = new StringBuilder();
-			if(cursorIdColumnName != null) {
+			if (cursorIdColumnName != null) {
 				columnNameSb.append(cursorIdColumnName).append(" as _id");
 			}
-			if(columnNames.size() == 0) {
+			if (columnNames.size() == 0) {
 				columnNames.add("*");
 			}
-			for(String columnName : columnNames) {
-				if(columnNameSb.length() > 0) {
+			for (String columnName : columnNames) {
+				if (columnNameSb.length() > 0) {
 					columnNameSb.append(",");
 				}
 				columnNameSb.append(columnName);
 			}
 			sb.append(columnNameSb);
 		}
-		
+
 		public class Where {
 			StringBuilder sb = new StringBuilder();
 			List<String> args = new ArrayList<String>();
+
 			public Where raw(String sql, String[] args) {
 				sb.append(sql);
 				return this;
 			}
+
 			public Where like(String columnName, String arg) {
 				sb.append(columnName).append(" like ?");
 				this.args.add(arg);
 				return this;
 			}
+
 			public String[] args() {
 				return args.toArray(new String[args.size()]);
 			}
+
 			@Override
 			public String toString() {
-				if(sb.length() > 0) {
+				if (sb.length() > 0) {
 					sb.insert(0, "where ");
 				}
 				return sb.toString();

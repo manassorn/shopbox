@@ -64,6 +64,7 @@
     </string-array>
     <string-array name="developer_menu_array">
         <item>camera</item>
+        <item>SQLite query date</item>
     </string-array>
 
     <string name="title_activity_billing">BillingActivity</string>
@@ -76,5 +77,6 @@
     <string name="receive_money_less_than_total">จำนวนเงินไม่เพียงพอ</string>
     <string name="title_activity_today_bill">TodayBillActivity</string>
     <string name="title_activity_return_option_menu">ReturnOptionMenuActivity</string>
+    <string name="title_activity_sql_query">SqlQueryActivity</string>
 
 </resources>

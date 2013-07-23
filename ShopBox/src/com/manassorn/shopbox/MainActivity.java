@@ -32,7 +32,7 @@ public class MainActivity extends DrawerActivity implements OnItemClickListener 
         drawerListView.setAdapter(new DrawerListArrayAdapter(this, menus));
         //
     	Intent intent = null;
-    	intent = new Intent(this, CameraInfoActivity.class);
+    	intent = new Intent(this, SelectBillByDateActivity.class);
     	startActivity(intent);
 	}
 

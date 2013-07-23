@@ -83,6 +83,14 @@
             android:name="com.manassorn.shopbox.CameraInfoActivity"
             android:label="CameraInfoActivity" >
         </activity>
+        <activity
+            android:name="com.manassorn.shopbox.SqlQueryActivity"
+            android:label="@string/title_activity_sql_query" >
+        </activity>
+        <activity
+            android:name="com.manassorn.shopbox.SelectBillByDateActivity"
+            android:label="SelectBillByDateActivity" >
+        </activity>
     </application>
 
 </manifest>

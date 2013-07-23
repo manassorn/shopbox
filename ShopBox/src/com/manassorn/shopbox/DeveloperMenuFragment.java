@@ -35,6 +35,8 @@ public class DeveloperMenuFragment extends Fragment implements OnItemClickListen
     		default: 
     			intent = new Intent(getActivity(), CameraInfoActivity.class);
     			break;
+    		case 1:
+    			intent = new Intent(getActivity(), SqlQueryActivity.class);
     	}
     	startActivity(intent);
 	}
