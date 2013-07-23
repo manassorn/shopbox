@@ -179,7 +179,7 @@ final class CameraConfigurationManager {
 			SharedPreferences prefs, boolean safeMode) {
 		// boolean currentSetting = FrontLightMode.readPref(prefs) ==
 		// FrontLightMode.ON;
-		boolean currentSetting = true;
+		boolean currentSetting = false;
 		doSetTorch(parameters, currentSetting, safeMode);
 	}
 

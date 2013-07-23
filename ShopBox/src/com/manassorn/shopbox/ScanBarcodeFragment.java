@@ -123,7 +123,6 @@ public class ScanBarcodeFragment extends Fragment implements OnTouchListener, Ca
 		}
 		try {
 			cameraManager.openDriver(surfaceHolder);
-			cameraManager.setTorch(false);
 			// Creating the handler starts the preview, which can also throw a
 			// RuntimeException.
 			if (handler == null) {
