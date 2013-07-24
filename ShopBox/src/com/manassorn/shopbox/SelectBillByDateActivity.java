@@ -2,6 +2,7 @@ package com.manassorn.shopbox;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -9,13 +10,13 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.manassorn.shopbox.BillFolderListAdapter.BillFolder;
 import com.manassorn.shopbox.db.BillDao;
@@ -29,6 +30,7 @@ public class SelectBillByDateActivity extends Activity {
 	SelectDateFragment selectDateFragment;
 	SelectBillFragment selectBillFragment;
 	Fragment currentFragment;
+	TextView dateText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +39,11 @@ public class SelectBillByDateActivity extends Activity {
 
 		calendar = Calendar.getInstance();
 		
+		dateText = (TextView) findViewById(R.id.date);
+		
 		setFragment(selectYearFragment());
 	}
-	
+
 	Calendar getCalendar() {
 		return calendar;
 	}
@@ -53,7 +57,21 @@ public class SelectBillByDateActivity extends Activity {
 		currentFragment = fragment;
 		//TODO - animate
 //		ft.setCustomAnimations(R.animator.slide_left_in, R.animator.slide_left_out, R.animator.slide_right_in, R.animator.slide_right_out);
+//		ft.setCustomAnimations(R.anim.enter, R.anim.exit);
         ft.replace(R.id.select_frame, fragment).commit();
+	}
+	
+	void onFragmentResume(Fragment fragment) {
+		Date date = calendar.getTime();
+		if(fragment == selectYearFragment) {
+			dateText.setText("");
+		} else if(fragment == selectMonthFragment) {
+			dateText.setText(String.format("%tY", date));
+		} else if(fragment == selectDateFragment) {
+			dateText.setText(String.format("%tY %tB", date, date));
+		} else if(fragment == selectBillFragment) {
+			dateText.setText(String.format("%tY %tB %te", date, date, date));
+		}
 	}
 
 	void selectBill(int billId) {
@@ -74,8 +92,8 @@ public class SelectBillByDateActivity extends Activity {
 		setFragment(selectDateFragment());
 	}
 	
-	void selectDate(int date) {
-		calendar.set(Calendar.DATE, date);
+	void selectDate(int day) {
+		calendar.set(Calendar.DATE, day);
 		setFragment(selectBillFragment());
 	}
 	
@@ -126,6 +144,12 @@ public class SelectBillByDateActivity extends Activity {
 		}
 
 		@Override
+		public void onResume() {
+			super.onResume();
+			activity.onFragmentResume(this);
+		}
+
+		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			int year = ((Integer) view.getTag()).intValue();
 			activity.selectYear(year);
@@ -156,6 +180,7 @@ public class SelectBillByDateActivity extends Activity {
 		@Override
 		public void onResume() {
 			super.onResume();
+			activity.onFragmentResume(this);
 			int year = activity.getCalendar().get(Calendar.YEAR);
 			folders.clear();
 			folders.addAll(billDao.getMonthFolder(year));
@@ -193,6 +218,7 @@ public class SelectBillByDateActivity extends Activity {
 		@Override
 		public void onResume() {
 			super.onResume();
+			activity.onFragmentResume(this);
 			Calendar cal = activity.getCalendar();
 			int year = cal.get(Calendar.YEAR);
 			int month = cal.get(Calendar.MONTH);
@@ -232,6 +258,7 @@ public class SelectBillByDateActivity extends Activity {
 		@Override
 		public void onResume() {
 			super.onResume();
+			activity.onFragmentResume(this);
 			Calendar cal = activity.getCalendar();
 			bills.clear();
 			bills.addAll(billDao.getForDate(cal.getTime()));

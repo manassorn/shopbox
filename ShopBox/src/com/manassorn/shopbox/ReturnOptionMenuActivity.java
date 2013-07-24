@@ -1,9 +1,10 @@
 package com.manassorn.shopbox;
 
-import android.os.Bundle;
+import com.manassorn.shopbox.value.Order;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -26,15 +27,26 @@ public class ReturnOptionMenuActivity extends Activity implements OnItemClickLis
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode == Activity.RESULT_OK) {
+			int billId = data.getIntExtra("BILL_ID", 0);
+			Intent intent = new Intent(this, ReturnProductActivity.class);
+			intent.putExtra("BILL_ID", billId);
+			startActivity(intent);
+		}
+	}
+
+	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//    	Intent intent = null;
-//    	switch(position) {
-//    		case 0:
-//    		default: 
-//    			intent = new Intent(this, SelectProductActivity.class);
-//    			break;
-//    	}
-//    	startActivity(intent);
+    	Intent intent = null;
+    	switch(position) {
+    		case 0:
+    		default: 
+    			intent = new Intent(this, SelectBillByDateActivity.class);
+    	    	startActivityForResult(intent, 0);
+    			break;
+    	}
 	}
 
 }

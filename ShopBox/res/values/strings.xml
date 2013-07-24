@@ -48,7 +48,7 @@
     </string-array>
 
     <string name="sell_product">ขายสินค้า</string>
-    <string name="selling_today">รายการขายวินนี้</string>
+    <string name="selling_today">รายการขายวันนี้</string>
 
     <string-array name="sell_menu_array">
         <item>@string/sell_product</item>

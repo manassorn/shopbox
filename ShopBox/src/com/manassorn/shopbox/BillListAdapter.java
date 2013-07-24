@@ -39,7 +39,7 @@ public class BillListAdapter extends ArrayAdapter<Bill> {
 		totalText.setText("ß" + bill.getTotal());
 		String friendlyDate = DateUtils.formatFriendly(context, bill.getCreatedTime());
 		createdTimeText.setText(friendlyDate);
-		
+		rowView.setTag(bill.getId());
 		return rowView;
 	}
 
