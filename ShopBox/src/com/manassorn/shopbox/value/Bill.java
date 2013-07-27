@@ -9,15 +9,13 @@ import android.os.Parcelable;
 import com.manassorn.shopbox.db.DatabaseField;
 
 public class Bill implements Parcelable {
-	@DatabaseField(id=true)
+	@DatabaseField(id=true, generatedId=true)
 	private int id;
 	@DatabaseField
 	private Date createdTime;
 	@DatabaseField
-	private double receiveMoney;
-	@DatabaseField
 	private double total;
-	@DatabaseField
+	
 	private ArrayList<BillItem> billItems;
 
 	public Bill() {
@@ -27,6 +25,9 @@ public class Bill implements Parcelable {
 	public Bill(ArrayList<BillItem> billItems) {
 		this.billItems = billItems;
 		this.createdTime = new Date();
+		if(billItems.size() > 0) {
+			total = ((BillSubTotalItem)billItems.get(billItems.size() - 1)).getSubTotal();
+		}
 	}
 
 	@Override
@@ -49,7 +50,7 @@ public class Bill implements Parcelable {
 		}
 	};
 
-	private Bill(Parcel in) {
+	protected Bill(Parcel in) {
 		billItems = new ArrayList<BillItem>();
 		in.readList(billItems, BillItem.class.getClassLoader());
 	}
@@ -60,14 +61,6 @@ public class Bill implements Parcelable {
 
 	public void setId(int billId) {
 		this.id = billId;
-	}
-	
-	public double getReceiveMoney() {
-		return receiveMoney;
-	}
-	
-	public void setReceiveMoney(double receiveMoney) {
-		this.receiveMoney = receiveMoney;
 	}
 	
 	public Date getCreatedTime() {
@@ -87,9 +80,9 @@ public class Bill implements Parcelable {
 	}
 	
 	public double getTotal() {
-		if(total != 0) return total;
-		if(billItems == null) return 0;
-		total = ((BillSubTotalItem)billItems.get(billItems.size() - 1)).getSubTotal();
+//		if(total != 0) return total;
+//		if(billItems == null) return 0;
+//		total = ((BillSubTotalItem)billItems.get(billItems.size() - 1)).getSubTotal();
 		return total;
 	}
 

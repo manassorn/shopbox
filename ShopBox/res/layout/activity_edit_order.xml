@@ -30,19 +30,19 @@
 	            android:layout_toRightOf="@id/markup_button"
 		        android:text="฿-" />
 		    <Button
-		        android:id="@+id/pay_button"
+		        android:id="@+id/submit_button"
 		        style="?android:attr/buttonStyleSmall"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 	            android:layout_centerVertical="true"
 	            android:layout_alignParentRight="true"
-		        android:text="ชำระเงิน >" />
+		        android:text="ชำระเงิน " />
 	        <TextView
 	            android:id="@+id/total"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_centerVertical="true"
-	            android:layout_toLeftOf="@id/pay_button" />
+	            android:layout_toLeftOf="@id/submit_button" />
 	        <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"

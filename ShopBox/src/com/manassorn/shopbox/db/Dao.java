@@ -10,12 +10,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import com.manassorn.shopbox.utils.SQLExceptionUtil;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.manassorn.shopbox.utils.SQLExceptionUtil;
 
 public class Dao<T, ID> {
 	public static final String dateFormat = "yyyy-MM-dd";
@@ -50,6 +50,16 @@ public class Dao<T, ID> {
 			return mapRow(cursor);
 		}
 		return null;
+	}
+
+	protected Object getFieldValue(Field field, T data) throws IllegalArgumentException,
+			IllegalAccessException {
+		Object val = field.get(data);
+		if (field.getType() == Date.class) {
+			SimpleDateFormat fmt = new SimpleDateFormat(dateTimeFormat);
+			return fmt.format((Date) val);
+		}
+		return val;
 	}
 
 	protected void setField(Field field, Object instance, Cursor cursor, String columnName)
@@ -176,7 +186,8 @@ public class Dao<T, ID> {
 	public int insert(List<T> list) throws SQLException {
 		int rows = 0;
 		for (T data : list) {
-			rows += insert(data);
+			insert(data);
+			rows++;
 		}
 		return rows;
 	}
@@ -188,7 +199,10 @@ public class Dao<T, ID> {
 		ContentValues values = new ContentValues();
 		for (Field field : tableInfo.getFields()) {
 			try {
-				values.put(field.getName(), field.get(data).toString());
+				DatabaseField databaseField = field.getAnnotation(DatabaseField.class);
+				if (!databaseField.generatedId()) {
+					values.put(field.getName(), getFieldValue(field, data).toString());
+				}
 			} catch (IllegalArgumentException e) {
 				throw SQLExceptionUtil.create("Could not assign object '" + data + "' to field "
 						+ field.getName(), e);
@@ -200,7 +214,11 @@ public class Dao<T, ID> {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		try {
 			long id = db.insert(tableInfo.getTableName(), null, values);
-			return 1;
+			if (id == -1) {
+				throw SQLExceptionUtil.create("Could not insert table: " + tableInfo.getTableName()
+						+ " values: " + values);
+			}
+			return (int) id;
 		} finally {
 			db.close();
 		}
@@ -275,7 +293,7 @@ public class Dao<T, ID> {
 			sb.append("select ");
 			appendColumnNames(sb);
 			sb.append(" from ").append(tableInfo.getTableName());
-			if(where != null) {
+			if (where != null) {
 				sb.append(" ").append(where);
 			}
 			if (groupBy != null) {

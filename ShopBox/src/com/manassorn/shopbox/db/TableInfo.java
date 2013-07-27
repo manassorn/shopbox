@@ -32,12 +32,15 @@ public class TableInfo<T, ID> {
 	
 	protected void extractFields() {
 		List<Field> fields = new ArrayList<Field>();
-		for (Field field : clazz.getDeclaredFields()) {
-			DatabaseField databaseField = field.getAnnotation(DatabaseField.class);
-			if(databaseField != null) {
-				fields.add(field);
-				if(databaseField.id()) {
-					this.idField = field;
+		for (Class<?> classWalk = clazz; classWalk != null; classWalk = classWalk.getSuperclass()) {
+			for (Field field : classWalk.getDeclaredFields()) {
+				DatabaseField databaseField = field.getAnnotation(DatabaseField.class);
+				if(databaseField != null) {
+					fields.add(field);
+					if(databaseField.id()) {
+						this.idField = field;
+					}
+					field.setAccessible(true);
 				}
 			}
 		}

@@ -16,7 +16,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "ShopBox";
 	private static final String SQL_DIR = "sql";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 5;
 	private static DbHelper instance;
 	private Context context;
 

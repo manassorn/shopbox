@@ -28,6 +28,11 @@ public class Product implements Parcelable {
 	public Product() {
 		
 	}
+	public Product(BillProductItem productItem) {
+		id = productItem.getProductId();
+		price = productItem.getProductPrice();
+		name = productItem.getProductName();
+	}
 	public int getId() {
 		return id;
 	}

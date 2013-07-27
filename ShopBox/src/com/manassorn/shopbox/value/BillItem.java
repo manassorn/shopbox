@@ -4,8 +4,12 @@ import java.util.Comparator;
 
 import android.os.Parcelable;
 
+import com.manassorn.shopbox.db.DatabaseField;
+
 public abstract class BillItem implements Parcelable {
+	@DatabaseField
 	protected int billId;
+	@DatabaseField
 	protected int sequence;
 
 	public int getSequence() {

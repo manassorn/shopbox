@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.manassorn.shopbox.db.BillDao;
 import com.manassorn.shopbox.db.Dao;
 import com.manassorn.shopbox.db.DbHelper;
+import com.manassorn.shopbox.db.SellBillDao;
 import com.manassorn.shopbox.utils.DateUtils;
 
 public class TodayBillActivity extends Activity {
@@ -28,7 +29,7 @@ public class TodayBillActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		DbHelper dbHelper = DbHelper.getHelper(this);
-		Cursor cursor = BillDao.getInstance(dbHelper).queryForToday();
+		Cursor cursor = SellBillDao.getInstance(dbHelper).queryForToday();
 		String[] from = new String[] { BillDao.ID, BillDao.TOTAL, BillDao.CREATED_TIME };
 		int[] to = new int[] { R.id.bill_id, R.id.bill_total, R.id.bill_created_time };
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.today_bill_list_item,

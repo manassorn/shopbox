@@ -19,8 +19,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.manassorn.shopbox.BillFolderListAdapter.BillFolder;
-import com.manassorn.shopbox.db.BillDao;
 import com.manassorn.shopbox.db.DbHelper;
+import com.manassorn.shopbox.db.SellBillDao;
 import com.manassorn.shopbox.value.Bill;
 
 public class SelectBillByDateActivity extends Activity {
@@ -133,9 +133,9 @@ public class SelectBillByDateActivity extends Activity {
 				Bundle savedInstanceState) {
 			activity = (SelectBillByDateActivity) getActivity();
 			DbHelper dbHelper = DbHelper.getHelper(activity);
-			BillDao billDao = BillDao.getInstance(dbHelper);
+			SellBillDao sellBillDao = SellBillDao.getInstance(dbHelper);
 			
-			List<BillFolder> folders = billDao.getYearFolder();
+			List<BillFolder> folders = sellBillDao.getYearFolder();
 			BillFolderListAdapter adapter = new BillFolderListAdapter(activity, folders);
 			listView = new ListView(activity);
 			listView.setAdapter(adapter);
@@ -161,13 +161,13 @@ public class SelectBillByDateActivity extends Activity {
 		SelectBillByDateActivity activity;
 		ListView listView;
 		List<BillFolder> folders;
-		BillDao billDao;
+		SellBillDao sellBillDao;
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			activity = (SelectBillByDateActivity) getActivity();
 			DbHelper dbHelper = DbHelper.getHelper(activity);
-			billDao = BillDao.getInstance(dbHelper);
+			sellBillDao = SellBillDao.getInstance(dbHelper);
 			
 			folders = new ArrayList<BillFolder>();
 			BillFolderListAdapter adapter = new BillFolderListAdapter(activity, folders);
@@ -183,7 +183,7 @@ public class SelectBillByDateActivity extends Activity {
 			activity.onFragmentResume(this);
 			int year = activity.getCalendar().get(Calendar.YEAR);
 			folders.clear();
-			folders.addAll(billDao.getMonthFolder(year));
+			folders.addAll(sellBillDao.getMonthFolder(year));
 			listView.invalidate();
 		}
 
@@ -199,13 +199,13 @@ public class SelectBillByDateActivity extends Activity {
 		SelectBillByDateActivity activity;
 		ListView listView;
 		List<BillFolder> folders;
-		BillDao billDao;
+		SellBillDao sellBillDao;
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			activity = (SelectBillByDateActivity) getActivity();
 			DbHelper dbHelper = DbHelper.getHelper(activity);
-			billDao = BillDao.getInstance(dbHelper);
+			sellBillDao = SellBillDao.getInstance(dbHelper);
 			
 			folders = new ArrayList<BillFolder>();
 			BillFolderListAdapter adapter = new BillFolderListAdapter(activity, folders);
@@ -223,7 +223,7 @@ public class SelectBillByDateActivity extends Activity {
 			int year = cal.get(Calendar.YEAR);
 			int month = cal.get(Calendar.MONTH);
 			folders.clear();
-			folders.addAll(billDao.getDateFolder(year, month));
+			folders.addAll(sellBillDao.getDateFolder(year, month));
 			listView.invalidate();
 		}
 
@@ -239,13 +239,13 @@ public class SelectBillByDateActivity extends Activity {
 		SelectBillByDateActivity activity;
 		ListView listView;
 		List<Bill> bills;
-		BillDao billDao;
+		SellBillDao sellBillDao;
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			activity = (SelectBillByDateActivity) getActivity();
 			DbHelper dbHelper = DbHelper.getHelper(activity);
-			billDao = BillDao.getInstance(dbHelper);
+			sellBillDao = SellBillDao.getInstance(dbHelper);
 			
 			bills = new ArrayList<Bill>();
 			BillListAdapter adapter = new BillListAdapter(activity, bills);
@@ -261,7 +261,7 @@ public class SelectBillByDateActivity extends Activity {
 			activity.onFragmentResume(this);
 			Calendar cal = activity.getCalendar();
 			bills.clear();
-			bills.addAll(billDao.getForDate(cal.getTime()));
+			bills.addAll(sellBillDao.getForDate(cal.getTime()));
 			listView.invalidate();
 		}
 

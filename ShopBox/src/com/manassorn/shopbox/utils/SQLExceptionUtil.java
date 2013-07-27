@@ -12,4 +12,9 @@ public class SQLExceptionUtil {
 		sqlException.initCause(cause);
 		return sqlException;
 	}
+	
+	public static SQLException create(String message) {
+		SQLException sqlException = new SQLException(message);
+		return sqlException;
+	}
 }

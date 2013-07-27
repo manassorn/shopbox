@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    
+    <CheckBox 
+        android:id="@+id/checkbox"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:layout_marginLeft="-7dp"
+        android:padding="0dp" />
+   <com.manassorn.shopbox.PimpdeedTextView
+        android:id="@+id/product_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.6"
+        android:singleLine="true"
+        android:ellipsize="none" />
+   <com.manassorn.shopbox.PimpdeedTextView
+        android:id="@+id/product_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:gravity="right" />
+   <com.manassorn.shopbox.PimpdeedTextView
+        android:id="@+id/product_total"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:gravity="right" />
+</LinearLayout>

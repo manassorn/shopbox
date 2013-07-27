@@ -1,9 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/paper"
-    tools:context=".ConfirmBillActivity" >
+    android:background="@drawable/paper" >
     
     <RelativeLayout 
         android:layout_width="match_parent"
@@ -17,19 +15,19 @@
             android:layout_centerVertical="true"
             android:text="รวม" />
         <Button
-            android:id="@+id/submit_button"
+            android:id="@+id/confirm_button"
 	        style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:text="ยืนยัน " />
+            android:text="ยืนยัน >" />
         <TextView
             android:id="@+id/total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/submit_button" />
+            android:layout_toLeftOf="@id/confirm_button" />
     </RelativeLayout>
     
     <LinearLayout

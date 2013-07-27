@@ -11,8 +11,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.manassorn.shopbox.ConfirmBillActivity.BillArrayAdapter;
-import com.manassorn.shopbox.db.BillDao;
 import com.manassorn.shopbox.db.DbHelper;
+import com.manassorn.shopbox.db.SellBillDao;
 import com.manassorn.shopbox.value.Bill;
 
 public class ViewBillActivity extends Activity {
@@ -32,18 +32,18 @@ public class ViewBillActivity extends Activity {
 		}
 		
 		DbHelper dbHelper = DbHelper.getHelper(this);
-		BillDao dao = BillDao.getInstance(dbHelper);
-		Bill bill;
+		SellBillDao dao = SellBillDao.getInstance(dbHelper);
+		Bill sellBill;
 		try {
-			bill = dao.getForId(billId);
+			sellBill = dao.getForId(billId);
 			
-			ListView listView = (ListView) findViewById(R.id.product_list);
-			listView.setAdapter(new BillArrayAdapter(this, bill.getBillItems()));
+			ListView listView = (ListView) findViewById(R.id.bill_item_list);
+			listView.setAdapter(new BillArrayAdapter(this, sellBill.getBillItems()));
 			
 			findViewById(R.id.confirm_button).setVisibility(View.GONE);
 			
 			TextView totalText = (TextView) findViewById(R.id.total);
-			totalText.setText(String.format("ß%,.2f", bill.getTotal()));
+			totalText.setText(String.format("ß%,.2f", sellBill.getTotal()));
 		} catch (SQLException e) {
 			Log.e(TAG, "Database Error", e);
 		}

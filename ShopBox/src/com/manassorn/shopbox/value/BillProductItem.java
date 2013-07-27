@@ -1,15 +1,21 @@
 package com.manassorn.shopbox.value;
 
+import com.manassorn.shopbox.db.DatabaseField;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class BillProductItem extends BillItem implements Comparable<BillProductItem> {
-	private int billId;
+	@DatabaseField
 	private int productId;
+	@DatabaseField
 	private String productName;
+	@DatabaseField
 	private double productPrice;
+	@DatabaseField
 	private int amount;
 	//TODO-remove total
+	@DatabaseField
 	private double total;
 
 	public BillProductItem() {

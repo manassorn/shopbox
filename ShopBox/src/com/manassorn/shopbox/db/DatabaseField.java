@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DatabaseField {
 	boolean id() default false;
+	boolean generatedId() default false;
 }

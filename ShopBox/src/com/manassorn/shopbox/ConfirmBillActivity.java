@@ -24,8 +24,8 @@ import com.manassorn.shopbox.value.BillSupplementItem;
 import com.manassorn.shopbox.value.Supplement;
 
 public class ConfirmBillActivity extends Activity implements OnClickListener {
-	private ArrayList<BillItem> billItems;
-	private double total;
+	ArrayList<BillItem> billItems;
+	double total;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +40,15 @@ public class ConfirmBillActivity extends Activity implements OnClickListener {
 		if (bundle != null) {
 			billItems = bundle.getParcelableArrayList("BILL_ITEM_ARRAY");
 		}
-		ListView listView = (ListView) findViewById(R.id.product_list);
+		ListView listView = (ListView) findViewById(R.id.bill_item_list);
 		listView.setAdapter(new BillArrayAdapter(this, billItems));
 
 		BillSubTotalItem totalItem = (BillSubTotalItem) billItems.get(billItems.size() - 1);
 		total = totalItem.getSubTotal();
 		setTotalView(total);
 
-		Button confirmButton = (Button) findViewById(R.id.confirm_button);
-		confirmButton.setOnClickListener(this);
+		Button submitButton = (Button) findViewById(R.id.submit_button);
+		submitButton.setOnClickListener(this);
 	}
 
 	@Override
@@ -60,6 +60,9 @@ public class ConfirmBillActivity extends Activity implements OnClickListener {
 
 	public static class BillArrayAdapter extends ArrayAdapter<BillItem> {
 		private Context context;
+		protected int productItemResId = R.layout.confirm_bill_product_item;
+		protected int supplementItemResId = R.layout.confirm_bill_supplement_item;
+		protected int subTotalItemResId = R.layout.confirm_bill_subtotal_item;
 
 		public BillArrayAdapter(Context context, List<BillItem> items) {
 			super(context, R.layout.confirm_bill_product_item, items);
@@ -82,7 +85,7 @@ public class ConfirmBillActivity extends Activity implements OnClickListener {
 		protected View getProductView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View rowView = inflater.inflate(R.layout.confirm_bill_product_item, parent, false);
+			View rowView = inflater.inflate(productItemResId, parent, false);
 			TextView productName = (TextView) rowView.findViewById(R.id.product_name);
 			TextView productAmount = (TextView) rowView.findViewById(R.id.product_amount);
 			TextView productTotal = (TextView) rowView.findViewById(R.id.product_total);
@@ -98,7 +101,7 @@ public class ConfirmBillActivity extends Activity implements OnClickListener {
 		protected View getSupplementView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View rowView = inflater.inflate(R.layout.confirm_bill_supplement_item, parent, false);
+			View rowView = inflater.inflate(supplementItemResId, parent, false);
 			TextView supplementName = (TextView) rowView.findViewById(R.id.supplement_name);
 			TextView supplementValue = (TextView) rowView.findViewById(R.id.supplement_value);
 			TextView supplementTotal = (TextView) rowView.findViewById(R.id.supplement_total);
@@ -117,7 +120,7 @@ public class ConfirmBillActivity extends Activity implements OnClickListener {
 		protected View getSubTotalView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View rowView = inflater.inflate(R.layout.confirm_bill_subtotal_item, parent, false);
+			View rowView = inflater.inflate(subTotalItemResId, parent, false);
 			TextView subTotal = (TextView) rowView.findViewById(R.id.subtotal);
 
 			BillSubTotalItem billSubTotalItem = (BillSubTotalItem) getItem(position);
@@ -135,7 +138,7 @@ public class ConfirmBillActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-			case R.id.confirm_button:
+			case R.id.submit_button:
 				startReceiveMoneyActivity();
 				break;
 		}

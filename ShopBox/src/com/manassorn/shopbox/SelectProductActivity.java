@@ -20,7 +20,7 @@ import com.manassorn.shopbox.value.OrderProduct;
 import com.manassorn.shopbox.value.Product;
 
 public class SelectProductActivity extends Activity implements OnClickListener {
-	private static final String TAG = SelectProductActivity.class.getSimpleName();
+	private static final String TAG = "SelectProductActivity";
 	private InputType inputType = InputType.SELECT_GRID;
 	private InputType lastBarcodeInputType = InputType.SCAN_BARCODE;
 	private OrderManager orderManager;

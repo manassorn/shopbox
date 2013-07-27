@@ -44,7 +44,7 @@
         android:text="ไม่พบ" />
     
     <ListView 
-        android:id="@+id/product_list"
+        android:id="@+id/bill_item_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

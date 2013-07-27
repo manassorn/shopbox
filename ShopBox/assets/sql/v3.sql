@@ -1,0 +1,1 @@
+alter table BillSupplementItem add column SupplementPriority integer default 10;

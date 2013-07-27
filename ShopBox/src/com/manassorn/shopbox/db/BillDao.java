@@ -11,21 +11,25 @@ import android.database.Cursor;
 import com.manassorn.shopbox.BillFolderListAdapter.BillFolder;
 import com.manassorn.shopbox.value.Bill;
 
-public class BillDao extends Dao<Bill, Integer> {
+public abstract class BillDao<T extends Bill> extends Dao<T, Integer> {
 	public static final String ID = "Id";
 	public static final String CREATED_TIME = "CreatedTime";
 	public static final String RECEIVE_MONEY = "ReceiveMoney";
 	public static final String TOTAL = "Total";
-	static BillDao instance;
+//	static BillDao instance;
+//
+//	public static BillDao getInstance(DbHelper dbHelper) {
+//		if (instance == null) {
+//			instance = new BillDao(dbHelper, Bill.class);
+//		}
+//		return instance;
+//	}
+//
+//	public BillDao(DbHelper dbHelper, Class<T> clazz) {
+//		super(dbHelper, clazz);
+//	}
 
-	public static BillDao getInstance(DbHelper dbHelper) {
-		if (instance == null) {
-			instance = new BillDao(dbHelper, Bill.class);
-		}
-		return instance;
-	}
-
-	public BillDao(DbHelper dbHelper, Class<Bill> clazz) {
+	protected BillDao(DbHelper dbHelper, Class<T> clazz) {
 		super(dbHelper, clazz);
 	}
 
@@ -34,7 +38,7 @@ public class BillDao extends Dao<Bill, Integer> {
 				.where("CreatedTime between date('now') and date('now', '+1 day')", null).query();
 	}
 
-	public List<Bill> getForDate(Date date) {
+	public List<T> getForDate(Date date) {
 		SimpleDateFormat fmt = new SimpleDateFormat(dateFormat);
 		String strDate = fmt.format(date);
 		String sqlDate = "date('" + strDate + "')";

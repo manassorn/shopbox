@@ -32,7 +32,6 @@ public class EditOrderAdapter extends ArrayAdapter<BillItem> {
 		super(context, R.layout.edit_bill_product_item, billItems);
 		this.context = context;
 		this.billItems = billItems;
-		this.checkBoxListener = checkBoxListener;
 	}
 	
 	public void setOnProductAmountChangedListener(OnProductAmountChangedListener listener) {

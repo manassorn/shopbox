@@ -1,18 +1,18 @@
 package com.manassorn.shopbox;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 
-public class MainActivity extends DrawerActivity implements OnItemClickListener {
+public class MainActivity extends DrawerActivity implements OnItemClickListener, OnClickListener {
 	private ListView drawerListView;
 	private DrawerLayout drawerLayout;
 	private SellMenuFragment sellMenuFragment;
@@ -26,6 +26,8 @@ public class MainActivity extends DrawerActivity implements OnItemClickListener 
 		
         getActionBar().setDisplayHomeAsUpEnabled(true);
 //        getActionBar().setIcon(R.drawable.barcode_icon);
+        getActionBar().setCustomView(R.layout.main_actionbar);
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         
         drawerLayout = getDrawerLayout();
         drawerListView = getDrawerListView();
@@ -33,10 +35,23 @@ public class MainActivity extends DrawerActivity implements OnItemClickListener 
 
         String[] menus = getResources().getStringArray(R.array.drawer_nav_array);
         drawerListView.setAdapter(new DrawerListArrayAdapter(this, menus));
+        
+        findViewById(R.id.drawer_button).setOnClickListener(this);
         //
     	Intent intent = null;
-    	intent = new Intent(this, SelectBillByDateActivity.class);
+    	intent = new Intent(this, ReturnOptionMenuActivity.class);
     	startActivity(intent);
+	}
+
+	@Override
+	public void onClick(View v) {
+		if(v.getId() == R.id.drawer_button) {
+			if(drawerLayout.isDrawerOpen(drawerListView)) {
+		        drawerLayout.closeDrawer(drawerListView);
+			} else {
+				drawerLayout.openDrawer(drawerListView);
+			}
+		}
 	}
 
 	@Override

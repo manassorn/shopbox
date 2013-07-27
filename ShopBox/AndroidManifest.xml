@@ -91,6 +91,22 @@
             android:name="com.manassorn.shopbox.SelectBillByDateActivity"
             android:label="SelectBillByDateActivity" >
         </activity>
+        <activity
+            android:name="com.manassorn.shopbox.ReturnProductActivity"
+            android:label="ReturnProductActivity" >
+        </activity>
+        <activity
+            android:name="com.manassorn.shopbox.EditReturnOrderActivity"
+            android:label="EditReturnOrderActivity" >
+        </activity>
+        <activity
+            android:name="com.manassorn.shopbox.ConfirmReturnBillActivity"
+            android:label="ConfirmReturnBillActivity" >
+        </activity>
+        <activity
+            android:name="com.manassorn.shopbox.ReturnMoneyActivity"
+            android:label="ReturnMoneyActivity" >
+        </activity>
     </application>
 
 </manifest>

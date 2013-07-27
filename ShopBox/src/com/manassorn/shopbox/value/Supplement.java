@@ -28,6 +28,15 @@ public class Supplement implements Parcelable, Comparable<Supplement> {
 	public Supplement() {
 
 	}
+	
+	public Supplement(BillSupplementItem supplementItem) {
+		id = supplementItem.getSupplementId();
+		type = supplementItem.getSupplementType();
+		name = supplementItem.getSupplementName();
+		percent = supplementItem.getSupplementPercent();
+		constant = supplementItem.getSupplementConstant();
+		priority = supplementItem.getSupplementPriority();
+	}
 
 	public int getId() {
 		return id;

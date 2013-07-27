@@ -1,6 +1,9 @@
 package com.manassorn.shopbox.db;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import com.manassorn.shopbox.value.BillItem;
 import com.manassorn.shopbox.value.BillProductItem;
@@ -8,6 +11,7 @@ import com.manassorn.shopbox.value.BillSubTotalItem;
 import com.manassorn.shopbox.value.BillSupplementItem;
 
 public class BillItemDao extends Dao<BillItem, Integer> {
+	public static final String BILL_ID = "BillId";
 	static BillItemDao instance;
 	Dao<BillProductItem, Integer> productItemDao;
 	Dao<BillSupplementItem, Integer> supplementItemDao;
@@ -37,6 +41,16 @@ public class BillItemDao extends Dao<BillItem, Integer> {
 			return subtotalItemDao.insert((BillSubTotalItem) data);
 		}
 		return 0;
+	}
+
+	@Override
+	public List<BillItem> getForEq(String columnName, Object val) {
+		List<BillItem> list = new ArrayList<BillItem>();
+		list.addAll(productItemDao.getForEq(columnName, val));
+		list.addAll(supplementItemDao.getForEq(columnName, val));
+		list.addAll(subtotalItemDao.getForEq(columnName, val));
+		Collections.sort(list, BillItem.comparator());
+		return list;
 	}
 
 }

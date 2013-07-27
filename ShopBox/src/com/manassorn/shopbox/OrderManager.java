@@ -80,6 +80,11 @@ public class OrderManager {
 	public void addProduct(Product product, int amount) {
 		addProduct(new OrderProduct(product, amount));
 	}
+	
+	public void addProduct(BillProductItem item) {
+		Product product = new Product(item);
+		addProduct(new OrderProduct(product, item.getAmount()));
+	}
 
 	public void addProduct(OrderProduct productItem) {
 		List<OrderProduct> productItems = order.getOrderProducts();
@@ -132,6 +137,10 @@ public class OrderManager {
 		} else {
 			throw new NoSuchElementException();
 		}
+	}
+	
+	public void addSupplement(BillSupplementItem supplementItem) {
+		addSupplement(new Supplement(supplementItem));
 	}
 
 	public void addSupplement(Supplement supplement) {

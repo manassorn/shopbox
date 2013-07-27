@@ -3,14 +3,23 @@ package com.manassorn.shopbox.value;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.manassorn.shopbox.db.DatabaseField;
 import com.manassorn.shopbox.value.Supplement.SupplementType;
 
 public class BillSupplementItem extends BillItem {
+	@DatabaseField
 	private int supplementId;
+	@DatabaseField
 	private String supplementName;
+	@DatabaseField
 	private SupplementType supplementType;
+	@DatabaseField
 	private double supplementPercent;
+	@DatabaseField
 	private double supplementConstant;
+	@DatabaseField
+	private int supplementPriority;
+	@DatabaseField
 	private double total;
 	
 	public BillSupplementItem() {
@@ -28,6 +37,7 @@ public class BillSupplementItem extends BillItem {
 		this.supplementType = supplement.getType();
 		this.supplementPercent = supplement.getPercent();
 		this.supplementConstant = supplement.getConstant();
+		this.supplementPriority = supplement.getPriority();
 	}
 
 	public int getSupplementId() {
@@ -70,6 +80,14 @@ public class BillSupplementItem extends BillItem {
 		this.supplementConstant = supplementConstant;
 	}
 
+	public int getSupplementPriority() {
+		return supplementPriority;
+	}
+
+	public void setSupplementPriority(int supplementPriority) {
+		this.supplementPriority = supplementPriority;
+	}
+
 	public double getTotal() {
 		return total;
 	}
@@ -93,6 +111,7 @@ public class BillSupplementItem extends BillItem {
 		dest.writeString(supplementType.name());
 		dest.writeDouble(supplementPercent);
 		dest.writeDouble(supplementConstant);
+		dest.writeInt(supplementPriority);
 		dest.writeDouble(total);
 	}
 
@@ -114,6 +133,7 @@ public class BillSupplementItem extends BillItem {
 		supplementType = SupplementType.valueOf(in.readString());
 		supplementPercent = in.readDouble();
 		supplementConstant = in.readDouble();
+		supplementPriority = in.readInt();
 		total = in.readDouble();
 	}
 }

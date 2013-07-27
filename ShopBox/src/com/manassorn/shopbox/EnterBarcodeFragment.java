@@ -31,7 +31,7 @@ public class EnterBarcodeFragment extends Fragment implements TextWatcher, OnCli
 		searchView = (EditText) view.findViewById(R.id.search_barcode);
 		searchView.addTextChangedListener(this);
 
-		listView = (ListView) view.findViewById(R.id.product_list);
+		listView = (ListView) view.findViewById(R.id.bill_item_list);
 
 		Button cancel = (Button) view.findViewById(R.id.cancel_button);
 		cancel.setOnClickListener(this);

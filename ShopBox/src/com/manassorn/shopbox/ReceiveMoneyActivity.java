@@ -15,12 +15,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.manassorn.shopbox.db.BillDao;
 import com.manassorn.shopbox.db.BillItemDao;
-import com.manassorn.shopbox.db.Dao;
 import com.manassorn.shopbox.db.DbHelper;
-import com.manassorn.shopbox.value.Bill;
+import com.manassorn.shopbox.db.SellBillDao;
 import com.manassorn.shopbox.value.BillItem;
+import com.manassorn.shopbox.value.SellBill;
 
 public class ReceiveMoneyActivity extends Activity implements OnClickListener {
 	private static final String TAG = ReceiveMoneyActivity.class.getSimpleName();
@@ -80,14 +79,17 @@ public class ReceiveMoneyActivity extends Activity implements OnClickListener {
 	}
 
 	protected int insertBill() {
-		Bill bill = new Bill(billItems);
-		bill.setReceiveMoney(getReceiveMoney());
+		SellBill sellBill = new SellBill(billItems);
+		sellBill.setReceiveMoney(getReceiveMoney());
 //		long billId = billDbAdapter.insertBill(bill);
 		DbHelper dbHelper = DbHelper.getHelper(this);
-		BillDao billDao = BillDao.getInstance(dbHelper);
+		SellBillDao sellBillDao = SellBillDao.getInstance(dbHelper);
 		BillItemDao billItemDao = BillItemDao.getInstance(dbHelper);
 		try {
-			billDao.insert(bill);
+			int billId = sellBillDao.insert(sellBill);
+			for(BillItem billItem : billItems) {
+				billItem.setBillId(billId);
+			}
 			billItemDao.insert(billItems);
 		} catch (SQLException e) {
 			Log.e(TAG, "Database Error", e);

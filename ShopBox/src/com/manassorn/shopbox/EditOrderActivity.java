@@ -38,11 +38,11 @@ public class EditOrderActivity extends Activity implements OnClickListener,
 	private DiscountDialogFragment discountDialog;
 	private ArrayList<Integer> selectedItems;
 	private View selectedItemBar;
-	private OrderManager orderManager;
 	private ListView billItemListView;
 	private EditOrderAdapter billItemAdapter;
 	private List<BillItem> billItemList;
 	private Order order;
+	OrderManager orderManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +78,8 @@ public class EditOrderActivity extends Activity implements OnClickListener,
 		Button delete = (Button) findViewById(R.id.delete_button);
 		delete.setOnClickListener(this);
 		
-		Button pay = (Button) findViewById(R.id.pay_button);
-		pay.setOnClickListener(this);
+		Button submit = (Button) findViewById(R.id.submit_button);
+		submit.setOnClickListener(this);
 
 		selectedItems = new ArrayList<Integer>();
 		selectedItemBar = findViewById(R.id.selected_item_bar);
@@ -120,7 +120,7 @@ public class EditOrderActivity extends Activity implements OnClickListener,
 					showConfirmDeleteDialog();
 				}
 				break;
-			case R.id.pay_button:
+			case R.id.submit_button:
 				startConfirmBillActivity();
 		}
 	}
@@ -176,7 +176,10 @@ public class EditOrderActivity extends Activity implements OnClickListener,
 		for (int i = billItemListView.getCount() - 1; i >= 0; i--) {
 			View view = billItemListView.getChildAt(i);
 			CheckBox cb = (CheckBox) view.findViewById(R.id.checkbox);
-			cb.setChecked(false);
+			// check if this is subtotal row
+			if(cb != null) {
+				cb.setChecked(false);
+			}
 		}
 		selectedItems.clear();
 		selectedItemBar.setVisibility(View.GONE);
