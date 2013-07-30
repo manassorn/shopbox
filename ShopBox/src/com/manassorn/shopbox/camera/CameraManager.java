@@ -19,6 +19,7 @@ package com.manassorn.shopbox.camera;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
