@@ -5,11 +5,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +26,7 @@ import com.manassorn.shopbox.db.DbHelper;
 import com.manassorn.shopbox.db.SellBillDao;
 import com.manassorn.shopbox.value.Bill;
 
-public class SelectBillByDateActivity extends Activity {
+public class SelectBillByDateActivity extends FragmentActivity {
 	Calendar calendar;
 	SelectYearFragment selectYearFragment;
 	SelectMonthFragment selectMonthFragment;
@@ -31,6 +34,7 @@ public class SelectBillByDateActivity extends Activity {
 	SelectBillFragment selectBillFragment;
 	Fragment currentFragment;
 	TextView dateText;
+	ViewPager pager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +45,27 @@ public class SelectBillByDateActivity extends Activity {
 		
 		dateText = (TextView) findViewById(R.id.date);
 		
+//		pager = (ViewPager) findViewById(R.id.pager);
+//		pager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
+		
 		setFragment(selectYearFragment());
 	}
+//
+//	@Override
+//	public void onBackPressed() {
+//		if(pager.getCurrentItem() == 0) {
+//			super.onBackPressed();
+//		} else {
+//			pager.setCurrentItem(pager.getCurrentItem() - 1);
+//		}
+//	}
 
 	Calendar getCalendar() {
 		return calendar;
 	}
 
 	void setFragment(Fragment fragment) {
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		if(currentFragment != null) {
 			ft.addToBackStack(currentFragment.getClass().getName());
 		}
@@ -84,12 +100,14 @@ public class SelectBillByDateActivity extends Activity {
 	void selectYear(int year) {
 		calendar.set(Calendar.YEAR, year);
 		setFragment(selectMonthFragment());
+//		pager.setCurrentItem(1);
 	}
 	
 	void selectMonth(int month) {
 		month = month - 1;
 		calendar.set(Calendar.MONTH, month);
 		setFragment(selectDateFragment());
+//		pager.setCurrentItem(2);
 	}
 	
 	void selectDate(int day) {
@@ -124,6 +142,30 @@ public class SelectBillByDateActivity extends Activity {
 		}
 		return selectBillFragment;
 	}
+	
+	class MyPageAdapter extends FragmentPagerAdapter {
+
+		public MyPageAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			switch(position) {
+				case 0: return selectYearFragment();
+				case 1: return selectMonthFragment();
+				case 2: return selectDateFragment();
+				case 3: return selectBillFragment();
+			}
+			return null;
+		}
+
+		@Override
+		public int getCount() {
+			return 4;
+		}
+		
+	}
 
 	public static class SelectYearFragment extends Fragment implements OnItemClickListener {
 		SelectBillByDateActivity activity;
@@ -140,6 +182,7 @@ public class SelectBillByDateActivity extends Activity {
 			listView = new ListView(activity);
 			listView.setAdapter(adapter);
 			listView.setOnItemClickListener(this);
+			listView.setBackgroundColor(0xffff00);
 			return listView;
 		}
 

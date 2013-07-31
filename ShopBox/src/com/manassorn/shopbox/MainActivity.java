@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -24,10 +25,12 @@ public class MainActivity extends DrawerActivity implements OnItemClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-//        getActionBar().setIcon(R.drawable.barcode_icon);
-        getActionBar().setCustomView(R.layout.main_actionbar);
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		getActionBar().hide();
+		
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
+////        getActionBar().setIcon(R.drawable.barcode_icon);
+//        getActionBar().setCustomView(R.layout.main_actionbar);
+//        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         
         drawerLayout = getDrawerLayout();
         drawerListView = getDrawerListView();
@@ -38,9 +41,9 @@ public class MainActivity extends DrawerActivity implements OnItemClickListener,
         
         findViewById(R.id.drawer_button).setOnClickListener(this);
         //
-    	Intent intent = null;
-    	intent = new Intent(this, ReturnOptionMenuActivity.class);
-    	startActivity(intent);
+//    	Intent intent = null;
+//    	intent = new Intent(this, ReturnOptionMenuActivity.class);
+//    	startActivity(intent);
 	}
 
 	@Override

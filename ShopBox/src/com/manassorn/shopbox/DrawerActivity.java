@@ -1,26 +1,22 @@
 package com.manassorn.shopbox;
 
-import com.manassorn.shopbox.R;
-
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class DrawerActivity extends Activity {
+public class DrawerActivity extends Activity implements DrawerListener {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    private ViewGroup contentFrame;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +28,15 @@ public class DrawerActivity extends Activity {
     @Override
     public void setContentView(final int layoutResID) {
         View fullLayout = getLayoutInflater().inflate(R.layout.activity_drawer, null); // Your base layout here
-        FrameLayout contentFrame = (FrameLayout) fullLayout.findViewById(R.id.content_frame);
+        ViewGroup contentFrame = (ViewGroup) fullLayout.findViewById(R.id.drawer_frame);
         getLayoutInflater().inflate(layoutResID, contentFrame, true); // Setting the content of layout your provided to the act_content frame
         super.setContentView(fullLayout);
         
         // drawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        this.contentFrame = contentFrame;
+        mDrawerLayout.setScrimColor(0);
+        mDrawerLayout.setDrawerListener(this);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
     }
 
@@ -110,4 +109,28 @@ public class DrawerActivity extends Activity {
         	return getItem(position).startsWith("+");
         }
     }
+
+	@Override
+	public void onDrawerClosed(View arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDrawerOpened(View arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDrawerSlide(View drawerView, float slideOffset) {
+		contentFrame.setX(slideOffset * mDrawerList.getMeasuredWidth());
+		
+	}
+
+	@Override
+	public void onDrawerStateChanged(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }

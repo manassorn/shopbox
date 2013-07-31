@@ -20,4 +20,9 @@
         android:id="@+id/select_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    
+    <com.manassorn.shopbox.NonSwipablePager
+	    android:id="@+id/pager"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" />
 </LinearLayout>

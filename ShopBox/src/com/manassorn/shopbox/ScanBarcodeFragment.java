@@ -72,7 +72,7 @@ public class ScanBarcodeFragment extends Fragment implements OnTouchListener, Ca
 	@Override
 	public void onResume() {
 		super.onResume();
-		cameraManager = new CameraManager(getActivity());
+		cameraManager = new CameraManager(getActivity().getApplication());
 
 		SurfaceView surfaceView = (SurfaceView) getView().findViewById(R.id.camera_preview);
 		SurfaceHolder surfaceHolder = surfaceView.getHolder();
