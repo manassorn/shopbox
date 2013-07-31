@@ -1,6 +1,7 @@
 package com.manassorn.shopbox;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -39,7 +40,7 @@ public class MainActivity extends DrawerActivity implements OnItemClickListener,
         findViewById(R.id.drawer_button).setOnClickListener(this);
         //
     	Intent intent = null;
-    	intent = new Intent(this, ReturnOptionMenuActivity.class);
+    	intent = new Intent(this, PasscodeActivity.class);
     	startActivity(intent);
 	}
 
@@ -56,19 +57,37 @@ public class MainActivity extends DrawerActivity implements OnItemClickListener,
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // update the main content by replacing fragments
-        Fragment fragment = null;
         switch(position) {
         	case 1:
         	default: 
-        		fragment = sellMenuFragment();
+        		replaceFragment(sellMenuFragment());
         		break;
         	case 2:
-        		fragment = returnMenuFragment();
+        		replaceFragment(returnMenuFragment());
+        		break;
+        	case 15:
+        		startPasscodeActivity();
         		break;
         	case 17:
-        		fragment = developerMenuFragment();
+        		replaceFragment(developerMenuFragment());
         }
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode == Activity.RESULT_OK) {
+//			replaceFragment(managerFragment());
+		}
+	}
+	
+	protected void startPasscodeActivity() {
+		Intent intent = new Intent(this, PasscodeActivity.class);
+		startActivityForResult(intent, 0);
+		overridePendingTransition(R.anim.slide_up_in, R.anim.stay_still);
+	}
+	
+	protected void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         drawerLayout.closeDrawer(drawerListView);
