@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/input_passcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="ใส่รหัสผ่าน" />
+    
+    <TextView
+        android:id="@+id/incorrect_passcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="รหัสไม่ถูกต้อง"
+        android:textColor="#ffffff"
+        android:background="@drawable/bar_red"
+        android:visibility="gone" />
+    
+    <TableLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="8dp">
+        
+        <TableRow>
+            <include layout="@layout/edittext_passcode"
+                android:id="@+id/digit1"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:layout_margin="8dp"/>
+            <include layout="@layout/edittext_passcode"
+                android:id="@+id/digit2"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:layout_margin="8dp"/>
+            <include layout="@layout/edittext_passcode"
+                android:id="@+id/digit3"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:layout_margin="8dp"/>
+            <include layout="@layout/edittext_passcode"
+                android:id="@+id/digit4"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:layout_margin="8dp"/>
+        </TableRow>
+    </TableLayout>
+
+    <EditText
+        android:id="@+id/passcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationX="0dp"
+        android:inputType="numberPassword"
+        android:maxLength="4" >
+        <requestFocus />
+    </EditText>
+</LinearLayout>
