@@ -167,8 +167,8 @@ public class ScanBarcodeFragment extends Fragment implements OnTouchListener, Ca
 	public void onFocusChange(View v, boolean hasFocus) {
 		switch(v.getId()) {
 			case R.id.search_barcode:
-				SelectProductActivity activity = (SelectProductActivity) getActivity();
-				activity.openEnterBarcode();
+				SellFragment sellFragment = (SellFragment) getParentFragment();
+				sellFragment.openEnterBarcode();
 		}
 	}
 

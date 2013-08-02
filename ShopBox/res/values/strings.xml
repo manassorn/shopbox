@@ -47,13 +47,6 @@
         <item>Developer</item>
     </string-array>
 
-    <string name="sell_product">ขายสินค้า</string>
-    <string name="selling_today">รายการขายวันนี้</string>
-
-    <string-array name="sell_menu_array">
-        <item>@string/sell_product</item>
-        <item>@string/selling_today</item>
-    </string-array>
     <string-array name="return_menu_array">
         <item>คืนสินค้า</item>
         <item>รายการคืนวันนี้</item>

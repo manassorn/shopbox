@@ -68,7 +68,7 @@ public class ProductGridFragment extends Fragment implements OnItemClickListener
 			createView(childCategories[position].getId());
 		} else {
 			position = position - childCategories.length;
-			((SelectProductActivity) getActivity()).addProduct(products[position]);
+			((SellFragment) getParentFragment()).addProduct(products[position]);
 		}
 	}
 

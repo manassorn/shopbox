@@ -30,6 +30,13 @@
 	        android:textAppearance="?android:attr/textAppearanceMedium"
 	        android:textColor="#ffffff"
 	        android:text="Shop Box"/>
+	    
+	    <LinearLayout 
+	        android:id="@+id/main_menu"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:layout_alignParentRight="true" />
     </RelativeLayout>
     
 	<FrameLayout

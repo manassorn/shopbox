@@ -36,6 +36,7 @@ public class EnterBarcodeFragment extends Fragment implements TextWatcher, OnCli
 		Button cancel = (Button) view.findViewById(R.id.cancel_button);
 		cancel.setOnClickListener(this);
 
+		((AutoHideKeyboardActivity) getActivity()).addObservedView(searchView);
 		return view;
 	}
 
@@ -92,8 +93,8 @@ public class EnterBarcodeFragment extends Fragment implements TextWatcher, OnCli
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.cancel_button:
-				SelectProductActivity activity = (SelectProductActivity) getActivity();
-				activity.openScanBarcode();
+				SellFragment sellFragment = (SellFragment) getParentFragment();
+				sellFragment.openScanBarcode();
 		}
 
 	}
