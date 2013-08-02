@@ -12,10 +12,18 @@
         android:background="#dddddd"
 	    android:paddingLeft="@dimen/activity_horizontal_margin" >
         <TextView
+            android:id="@+id/total_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
             android:text="รวม" />
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/total_label" />
         <Button
             android:id="@+id/submit_button"
 	        style="?android:attr/buttonStyleSmall"
@@ -24,12 +32,6 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:text="ยืนยัน " />
-        <TextView
-            android:id="@+id/total"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/submit_button" />
     </RelativeLayout>
     
     <LinearLayout
