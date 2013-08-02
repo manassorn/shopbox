@@ -30,7 +30,7 @@
         </activity>
         <activity
             android:name="com.manassorn.shopbox.SelectProductActivity"
-            android:label="@string/sell_product" >
+            android:label="SelectProductActivity" >
         </activity>
         <activity
             android:name="com.manassorn.shopbox.DrawerActivity"

@@ -24,6 +24,7 @@
             android:background="@drawable/search_background"
             android:drawableLeft="@android:drawable/ic_menu_search"
             android:singleLine="true"
+            android:inputType="number"
             android:hint="พิมพ์บาร์โค้ด">
             <requestFocus />
         </EditText>

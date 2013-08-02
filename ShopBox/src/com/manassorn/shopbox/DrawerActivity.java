@@ -1,6 +1,5 @@
 package com.manassorn.shopbox;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -13,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class DrawerActivity extends Activity implements DrawerListener {
+public class DrawerActivity extends AutoHideKeyboardActivity implements DrawerListener {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ViewGroup contentFrame;
@@ -21,20 +20,16 @@ public class DrawerActivity extends Activity implements DrawerListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_drawer);
-		
+		super.setContentView(R.layout.activity_drawer);
 	}
 
     @Override
     public void setContentView(final int layoutResID) {
-        View fullLayout = getLayoutInflater().inflate(R.layout.activity_drawer, null); // Your base layout here
-        ViewGroup contentFrame = (ViewGroup) fullLayout.findViewById(R.id.drawer_frame);
-        getLayoutInflater().inflate(layoutResID, contentFrame, true); // Setting the content of layout your provided to the act_content frame
-        super.setContentView(fullLayout);
+    	contentFrame = (ViewGroup) findViewById(R.id.drawer_frame);
+    	getLayoutInflater().inflate(layoutResID, contentFrame, true);
         
         // drawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        this.contentFrame = contentFrame;
         mDrawerLayout.setScrimColor(0);
         mDrawerLayout.setDrawerListener(this);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
