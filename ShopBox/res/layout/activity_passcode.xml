@@ -61,7 +61,7 @@
         android:id="@+id/passcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:translationX="0dp"
+        android:translationX="-1000dp"
         android:inputType="numberPassword"
         android:maxLength="4" >
         <requestFocus />
