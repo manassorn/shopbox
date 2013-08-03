@@ -118,15 +118,15 @@ public class MainActivity extends DrawerActivity implements OnItemClickListener,
 		ImageView menuItemView = new ImageView(this);
 		menuItemView.setAdjustViewBounds(true);
 		menuItemView.setClickable(true);
-		//TODO - menu padding is wrong
-		int pixels = getResources().getDimensionPixelSize(R.dimen.dp8);
-		menuItemView.setPadding(pixels, pixels, pixels, pixels);
 		menuItemView.setImageDrawable(menuItem.getIcon());
 		menuItemView.setId(menuItem.getItemId());
 		menuItemView.setVisibility(menuItem.isVisible() ? View.VISIBLE : View.GONE);
 		TypedArray a = obtainStyledAttributes(new int[]{android.R.attr.selectableItemBackground});
 		Drawable bg = a.getDrawable(0);
 		menuItemView.setBackground(bg);
+		// setPadding must call after setBackground
+		int pixels = getResources().getDimensionPixelSize(R.dimen.dp8);
+		menuItemView.setPadding(pixels, pixels, pixels, pixels);
 		a.recycle();
 		return menuItemView;
 	}
