@@ -10,7 +10,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:gravity="center_vertical"
         android:background="#2aa4cd"
-    android:foreground="?android:attr/windowContentOverlay" >
+    	android:foreground="?android:attr/windowContentOverlay" >
         
         <ImageView
 	        android:id="@+id/drawer_button"
@@ -22,14 +22,15 @@
 	    	android:background="?android:attr/selectableItemBackground"
 	    	android:clickable="true" />
     
-	    <TextView 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_toRightOf="@id/drawer_button"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 	        android:layout_centerVertical="true"
-	        android:textAppearance="?android:attr/textAppearanceMedium"
-	        android:textColor="#ffffff"
-	        android:text="Shop Box"/>
+	        android:layout_toRightOf="@id/drawer_button"
+	        android:paddingTop="8dp"
+	        android:paddingBottom="8dp"
+	        android:adjustViewBounds="true"
+            android:src="@drawable/logo_text" />
 	    
 	    <LinearLayout 
 	        android:id="@+id/main_menu"

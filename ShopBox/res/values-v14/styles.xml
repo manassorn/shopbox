@@ -12,10 +12,11 @@
 		<item name="displayOptions">showHome|homeAsUp|showTitle</item>
 		<item name="android:icon">@android:color/transparent</item>
 		
-		<item name="homeAsUpIndicator">@drawable/custom_home</item>
+		<item name="android:homeAsUpIndicator">@drawable/custom_home</item>
          -->
         <item name="android:displayOptions">homeAsUp</item>
-		<item name="android:icon">@android:color/transparent</item>
+		<item name="android:icon">@drawable/logo_text</item>
+		<item name="android:homeAsUpIndicator">@drawable/home_close</item>
 		
 		<item name="android:actionBarStyle">@style/MyActionBar</item>
 		

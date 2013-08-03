@@ -9,6 +9,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 	    <TextView
+	        android:layout_width="match_parent" 
+	        android:layout_height="wrap_content"
+	        android:layout_span="2"
+        	android:padding="@dimen/activity_vertical_margin"
+	        android:gravity="center"
+	        android:background="#97ce68"
+	        android:textColor="#ffffff"
+	        android:text="บันทึกรายการเรียบร้อย"/>
+    </TableRow>
+	
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dee0e0">
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="1dp"
+	        android:layout_span="2" />
+    </TableRow>
+	
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+	    <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
         	android:padding="@dimen/activity_vertical_margin"
@@ -95,7 +119,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_span="2"
 	        android:layout_gravity="center"
-	        android:text="เรียบร้อย"/>
+	        android:text="กลับสู่หน้าหลัก"/>
     </TableRow>
 	
     <TableRow

@@ -5,6 +5,7 @@ import com.manassorn.shopbox.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,6 +19,7 @@ public class GiveChangeActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_give_change);
 
+		// action bar
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Button complete = (Button) findViewById(R.id.complete_button);
@@ -41,6 +43,21 @@ public class GiveChangeActivity extends Activity implements OnClickListener {
 			changeText.setText(formatPrice(receiveMoney - total));
 		}
 	}
+
+	@Override
+	public void onBackPressed() {
+		startMainActivityClearTop();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == android.R.id.home) {
+			onBackPressed();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 
 	@Override
 	public void onClick(View v) {
