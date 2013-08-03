@@ -27,6 +27,7 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
 //    	Intent intent = null;
 //    	intent = new Intent(this, ReturnOptionMenuActivity.class);
 //    	startActivity(intent);
+        replaceFragment(sellFragment());
 	}
 
 	@Override
