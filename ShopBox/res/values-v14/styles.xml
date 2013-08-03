@@ -14,6 +14,8 @@
 		
 		<item name="homeAsUpIndicator">@drawable/custom_home</item>
          -->
+		<item name="android:homeAsUpIndicator">@drawable/home_as_up</item>
+		
         <item name="android:displayOptions">homeAsUp</item>
 		<item name="android:icon">@android:color/transparent</item>
 		

@@ -30,7 +30,7 @@
         </activity>
         <activity
             android:name="com.manassorn.shopbox.SelectProductActivity"
-            android:label="SelectProductActivity" >
+            android:label="@string/sell" >
         </activity>
         <activity
             android:name="com.manassorn.shopbox.DrawerActivity"
@@ -38,15 +38,15 @@
         </activity>
         <activity
             android:name="com.manassorn.shopbox.ScanBarcodeActivity"
-            android:label="Scan Barcode" >
+            android:label="@string/sell" >
         </activity>
         <activity
             android:name="com.manassorn.shopbox.ConfirmBillActivity"
-            android:label="@string/title_activity_billing" >
+            android:label="@string/sell" >
         </activity>
         <activity
             android:name="com.manassorn.shopbox.EnterBarcodeFragment"
-            android:label="@string/title_activity_enter_barcode" >
+            android:label="@string/sell" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -57,15 +57,15 @@
         </activity>
         <activity
             android:name="com.manassorn.shopbox.ReceiveMoneyActivity"
-            android:label="@string/title_activity_receive_money" >
+            android:label="@string/sell" >
         </activity>
         <activity
             android:name="com.manassorn.shopbox.GiveChangeActivity"
-            android:label="@string/title_activity_give_change" >
+            android:label="@string/sell" >
         </activity>
         <activity
             android:name="com.manassorn.shopbox.EditOrderActivity"
-            android:label="@string/title_activity_finalize_price" >
+            android:label="@string/sell" >
         </activity>
         <activity
             android:name="com.manassorn.shopbox.ViewBillActivity"
