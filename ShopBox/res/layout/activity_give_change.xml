@@ -119,6 +119,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_span="2"
 	        android:layout_gravity="center"
+	        android:minWidth="160dp"
 	        android:text="กลับสู่หน้าหลัก"/>
     </TableRow>
 	
@@ -131,6 +132,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_span="2"
 	        android:layout_gravity="center"
+	        android:minWidth="160dp"
 	        android:text="ดูใบเสร็จ"/>
     </TableRow>
 
