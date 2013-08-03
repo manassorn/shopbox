@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ReceiveMoneyActivity"
-    android:stretchColumns="1" >
+    android:stretchColumns="0" >
 	
     <TableRow
         android:layout_width="match_parent"
@@ -45,10 +45,9 @@
 	        android:text="รับเงิน" />
 	    <EditText
 	        android:id="@+id/receive_money"
-	        android:layout_width="wrap_content"
+	        android:layout_width="150dp"
 	        android:layout_height="wrap_content"
 	        android:inputType="numberDecimal"
-	        android:ems="6"
 			android:gravity="right" />
     </TableRow>
 	
