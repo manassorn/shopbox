@@ -112,6 +112,10 @@
             android:name="com.manassorn.shopbox.PasscodeActivity"
             android:label="Passcode" >
         </activity>
+        <activity
+            android:name="com.manassorn.shopbox.ManagerActivity"
+            android:label="Manager" >
+        </activity>
     </application>
 
 </manifest>

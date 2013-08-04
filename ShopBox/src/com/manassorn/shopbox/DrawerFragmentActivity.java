@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class DrawerFragmentActivity extends DrawerActivity implements OnClickListener {
 	private Fragment currentFragment;
@@ -96,5 +97,15 @@ public class DrawerFragmentActivity extends DrawerActivity implements OnClickLis
 	
 	public void setCurrentFragment(Fragment fragment) {
 		currentFragment = fragment;
+	}
+	
+	public void setTitle(String title) {
+		TextView view = (TextView) findViewById(R.id.title);
+		view.setText(title);
+	}
+	
+	public void setMyActionBarColor(int color) {
+		View myActionBar = findViewById(R.id.my_actionbar);
+		myActionBar.setBackgroundColor(color);
 	}
 }

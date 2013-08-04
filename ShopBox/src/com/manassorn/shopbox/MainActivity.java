@@ -23,11 +23,12 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
 
         String[] menus = getResources().getStringArray(R.array.drawer_cashier_array);
         drawerListView.setAdapter(new DrawerListArrayAdapter(this, menus));
-        //
-//    	Intent intent = null;
-//    	intent = new Intent(this, ReturnOptionMenuActivity.class);
-//    	startActivity(intent);
+        
         replaceFragment(sellFragment());
+        
+    	Intent intent = null;
+    	intent = new Intent(this, ManagerActivity.class);
+    	startActivity(intent);
 	}
 
 	@Override

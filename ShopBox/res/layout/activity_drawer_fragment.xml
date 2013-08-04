@@ -5,7 +5,7 @@
     android:orientation="vertical" >
     
     <RelativeLayout 
-        android:id="@+id/actionbar"
+        android:id="@+id/my_actionbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:gravity="center_vertical"
@@ -23,6 +23,7 @@
 	    	android:clickable="true" />
     
         <ImageView
+            android:id="@+id/logo_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 	        android:layout_centerVertical="true"
@@ -31,6 +32,15 @@
 	        android:paddingBottom="8dp"
 	        android:adjustViewBounds="true"
             android:src="@drawable/logo_text" />
+        
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/logo_text"
+	        android:layout_centerVertical="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#ffffff" />
 	    
 	    <LinearLayout 
 	        android:id="@+id/main_menu"

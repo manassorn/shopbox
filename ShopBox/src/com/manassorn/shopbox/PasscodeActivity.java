@@ -2,6 +2,7 @@ package com.manassorn.shopbox;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -27,6 +28,8 @@ public class PasscodeActivity extends Activity implements TextWatcher, OnClickLi
 		setContentView(root);
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		int managerViolet = getResources().getColor(R.color.manager_violet);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(managerViolet));
 
 		passcodeDigits[0] = (EditText) findViewById(R.id.digit1);
 		passcodeDigits[1] = (EditText) findViewById(R.id.digit2);
