@@ -34,7 +34,7 @@
         <item>นำเข้า/ส่งออก</item>
         <item>ตั้งค่า</item>
         <item>เปลี่ยนรหัสผ่าน</item>
-        <item>ล็อกเอาท์</item>
+        <item>ออก</item>
     </string-array>
 
     <string-array name="drawer_cashier_array">

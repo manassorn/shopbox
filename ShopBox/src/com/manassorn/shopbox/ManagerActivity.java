@@ -32,7 +32,7 @@ public class ManagerActivity extends DrawerFragmentActivity implements OnItemCli
 				.setMessage("ต้องการออกจากเมนูผ้จัดการ?")
 				.setPositiveButton("ใช่", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						finish();
+						ManagerActivity.super.onBackPressed();
 					}
 				}).setNegativeButton("ไม่ใช่", null).show();
 		// super.onBackPressed();
@@ -44,6 +44,9 @@ public class ManagerActivity extends DrawerFragmentActivity implements OnItemCli
 			case 1:
 			default:
 				// replaceFragment(sellFragment());
+			case 4:
+				onBackPressed();
+				break;
 		}
 	}
 
