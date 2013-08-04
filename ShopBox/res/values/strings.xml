@@ -28,8 +28,16 @@
     <string name="wait_sync">รอ sync</string>
     <string name="discount">ส่วนลด</string>
     <string name="markup">ส่วนเพิ่ม</string>
+    
+    <string-array name="drawer_manager_array">
+        <item>สินค้า</item>
+        <item>นำเข้า/ส่งออก</item>
+        <item>ตั้งค่า</item>
+        <item>เปลี่ยนรหัสผ่าน</item>
+        <item>ล็อกเอาท์</item>
+    </string-array>
 
-    <string-array name="drawer_nav_array">
+    <string-array name="drawer_cashier_array">
         <item>@string/selling</item>
         <item>@string/sell</item>
         <item>@string/return1</item>

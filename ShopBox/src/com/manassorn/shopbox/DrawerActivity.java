@@ -54,6 +54,26 @@ public class DrawerActivity extends AutoHideKeyboardActivity implements DrawerLi
     	return mDrawerLayout;
     }
     
+    public void openDrawer() {
+    	mDrawerLayout.openDrawer(mDrawerList);
+    }
+    
+    public void closeDrawer() {
+    	mDrawerLayout.closeDrawer(mDrawerList);
+    }
+    
+    public void toggleDrawer() {
+    	if(isDrawerOpen()) {
+    		closeDrawer();
+    	} else {
+    		openDrawer();
+    	}
+    }
+    
+    public boolean isDrawerOpen() {
+		return mDrawerLayout.isDrawerOpen(mDrawerList);
+    }
+    
     public static class DrawerListArrayAdapter extends ArrayAdapter<String> {
         private LayoutInflater mInflater;
 

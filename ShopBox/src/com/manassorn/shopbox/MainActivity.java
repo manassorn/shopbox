@@ -1,28 +1,15 @@
 package com.manassorn.shopbox;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 
-public class MainActivity extends DrawerActivity implements OnItemClickListener, OnClickListener {
+public class MainActivity extends DrawerFragmentActivity implements OnItemClickListener {
 	private static final int PASSCODE_REQUEST_CODE = 0x1000;
-	private ListView drawerListView;
-	private DrawerLayout drawerLayout;
-	private Fragment currentFragment;
 	private SellFragment sellFragment;
 	private ReturnMenuFragment returnMenuFragment;
 	private DeveloperMenuFragment developerMenuFragment;
@@ -30,38 +17,16 @@ public class MainActivity extends DrawerActivity implements OnItemClickListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		
-		getActionBar().hide();
         
-        drawerLayout = getDrawerLayout();
-        drawerListView = getDrawerListView();
-        drawerListView.setOnItemClickListener(this);
+		ListView drawerListView = getDrawerListView();
+		drawerListView.setOnItemClickListener(this);
 
-        String[] menus = getResources().getStringArray(R.array.drawer_nav_array);
+        String[] menus = getResources().getStringArray(R.array.drawer_cashier_array);
         drawerListView.setAdapter(new DrawerListArrayAdapter(this, menus));
-        
-        findViewById(R.id.drawer_button).setOnClickListener(this);
         //
 //    	Intent intent = null;
 //    	intent = new Intent(this, ReturnOptionMenuActivity.class);
 //    	startActivity(intent);
-        replaceFragment(sellFragment());
-	}
-
-	@Override
-	public void onClick(View v) {
-		if(v.getId() == R.id.drawer_button) {
-			if(drawerLayout.isDrawerOpen(drawerListView)) {
-		        drawerLayout.closeDrawer(drawerListView);
-			} else {
-				drawerLayout.openDrawer(drawerListView);
-			}
-		} else {
-			//because MainActivity only have 2 onclick, drawer_button and menu buttons
-			MenuItem menuItem = (MenuItem) v.getTag();
-			currentFragment.onOptionsItemSelected(menuItem);
-		}
 	}
 
 	@Override
@@ -87,49 +52,11 @@ public class MainActivity extends DrawerActivity implements OnItemClickListener,
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode == PASSCODE_REQUEST_CODE) {
 			if(resultCode == Activity.RESULT_OK) {
-	//			replaceFragment(managerFragment());
+				startManagerActivity();
 			}
 		} else {
-			currentFragment.onActivityResult(requestCode, resultCode, data);
+			getCurrentFragment().onActivityResult(requestCode, resultCode, data);
 		}
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		if(currentFragment != null) {
-			// clear all menu
-			ViewGroup menuLayout = (ViewGroup) findViewById(R.id.main_menu);
-			menuLayout.removeAllViews();
-			// call child fragment
-			currentFragment.onCreateOptionsMenu(menu, getMenuInflater());
-			// show menu in custom actionbar
-			for(int i=0; i<menu.size(); i++) {
-				MenuItem menuItem = menu.getItem(i);
-				ImageView menuItemView = createMenuView(menuItem);
-				menuLayout.addView(menuItemView);
-				menuItemView.setTag(menuItem);
-				menuItemView.setOnClickListener(this);
-			}
-		}
-		// hide menu in real actionbar
-		return false;
-	}
-	
-	protected ImageView createMenuView(MenuItem menuItem) {
-		ImageView menuItemView = new ImageView(this);
-		menuItemView.setAdjustViewBounds(true);
-		menuItemView.setClickable(true);
-		menuItemView.setImageDrawable(menuItem.getIcon());
-		menuItemView.setId(menuItem.getItemId());
-		menuItemView.setVisibility(menuItem.isVisible() ? View.VISIBLE : View.GONE);
-		TypedArray a = obtainStyledAttributes(new int[]{android.R.attr.selectableItemBackground});
-		Drawable bg = a.getDrawable(0);
-		menuItemView.setBackground(bg);
-		// setPadding must call after setBackground
-		int pixels = getResources().getDimensionPixelSize(R.dimen.dp8);
-		menuItemView.setPadding(pixels, pixels, pixels, pixels);
-		a.recycle();
-		return menuItemView;
 	}
 
 	protected void startPasscodeActivity() {
@@ -138,23 +65,10 @@ public class MainActivity extends DrawerActivity implements OnItemClickListener,
 		overridePendingTransition(R.anim.slide_up_in, R.anim.stay_still);
 	}
 	
-	protected void replaceFragment(Fragment fragment) {
-		currentFragment = fragment;
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-        
-        invalidateOptionsMenu();
-        drawerLayout.closeDrawer(drawerListView);
+	protected void startManagerActivity() {
+		Intent intent = new Intent(this, ManagerActivity.class);
+		startActivity(intent);
 	}
-
-//	@Override
-//	public void onBackPressed() {
-//		if(drawerLayout.isDrawerOpen(drawerListView)) {
-//	        drawerLayout.closeDrawer(drawerListView);
-//		} else {
-//			drawerLayout.openDrawer(drawerListView);
-//		}
-//	}
 
 	protected SellFragment sellFragment() {
 		if(sellFragment == null) {
