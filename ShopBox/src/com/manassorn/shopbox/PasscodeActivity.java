@@ -8,13 +8,11 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 
 public class PasscodeActivity extends Activity implements TextWatcher, OnClickListener {
 	EditText[] passcodeDigits = new EditText[4];
@@ -128,31 +126,4 @@ public class PasscodeActivity extends Activity implements TextWatcher, OnClickLi
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 	}
 
-	public static class InterceptBackPressedLayout extends FrameLayout {
-
-		public InterceptBackPressedLayout(Context context) {
-			super(context);
-			LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-			setLayoutParams(lp);
-		}
-
-		@Override
-		public boolean dispatchKeyEventPreIme(KeyEvent event) {
-			if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
-				KeyEvent.DispatcherState state = getKeyDispatcherState();
-				if(state != null) {
-					if(event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0) {
-						state.startTracking(event, this);
-						return true;
-					} else if(event.getAction() == KeyEvent.ACTION_UP && !event.isCanceled() && state.isTracking(event)) {
-						((Activity) getContext()).onBackPressed();
-						return true;
-					}
-				}
-			}
-			return super.dispatchKeyEventPreIme(event);
-		}
-		
-		
-	}
 }

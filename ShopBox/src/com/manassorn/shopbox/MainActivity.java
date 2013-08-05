@@ -26,9 +26,9 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
         
         replaceFragment(sellFragment());
         
-//    	Intent intent = null;
-//    	intent = new Intent(this, ManagerActivity.class);
-//    	startActivity(intent);
+    	Intent intent = null;
+    	intent = new Intent(this, ChangePasscodeActivity.class);
+    	startActivity(intent);
 	}
 
 	@Override

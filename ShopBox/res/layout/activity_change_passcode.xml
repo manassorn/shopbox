@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       	android:padding="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:background="#f15b49"
+        android:visibility="gone"
+        android:text="รหัสไม่ถูกต้อง" />
+    
+	<LinearLayout
+	    android:id="@+id/container"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/status"
+	    android:orientation="vertical"
+    	android:gravity="center_horizontal" >
+	    
+		<!-- PASSCODE -->
+	    <TextView
+	        android:id="@+id/passcode_label"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+       		android:padding="@dimen/activity_vertical_margin"
+       		android:gravity="center"
+	        android:text="รหัสผ่าน" />
+	    
+	    <include layout="@layout/passcode_box_dummy"
+	        android:id="@+id/passcode_dummy" />
+	    
+		<View
+		    android:layout_width="match_parent"
+		    android:layout_height="1dp"
+       		android:layout_marginTop="@dimen/activity_vertical_margin"
+		    android:background="#dee0e0" />
+	    
+		<!-- NEW PASSCODE -->
+	    <TextView
+	        android:id="@+id/new_passcode_label"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+       		android:padding="@dimen/activity_vertical_margin"
+       		android:gravity="center"
+	        android:text="รหัสผ่านใหม่" />
+	    
+	    <include layout="@layout/passcode_box_dummy"
+	        android:id="@+id/new_passcode_dummy" />
+	    
+		<View
+		    android:layout_width="match_parent"
+		    android:layout_height="1dp"
+       		android:layout_marginTop="@dimen/activity_vertical_margin"
+		    android:background="#dee0e0" />
+	    
+		<!-- CONFIRM PASSCODE -->
+	    <TextView
+	        android:id="@+id/confirm_passcode_label"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+       		android:padding="@dimen/activity_vertical_margin"
+       		android:gravity="center"
+	        android:text="ยืนยันรหัสผ่าน" />
+	    
+	    <include layout="@layout/passcode_box_dummy"
+	        android:id="@+id/confirm_passcode_dummy" />
+	    
+		<View
+		    android:layout_width="match_parent"
+		    android:layout_height="1dp"
+       		android:layout_marginTop="@dimen/activity_vertical_margin"
+		    android:background="#dee0e0" />
+	</LinearLayout>
+    
+    <include layout="@layout/hidden_passcode"
+        android:id="@+id/hidden_passcode" />
+    <include layout="@layout/hidden_passcode"
+        android:id="@+id/hidden_new_passcode" />
+    <include layout="@layout/hidden_passcode"
+        android:id="@+id/hidden_confirm_passcode" />
+</RelativeLayout>

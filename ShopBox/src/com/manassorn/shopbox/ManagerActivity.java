@@ -2,6 +2,7 @@ package com.manassorn.shopbox;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,7 +10,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class ManagerActivity extends DrawerFragmentActivity implements OnItemClickListener {
-	private SellFragment sellFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +44,18 @@ public class ManagerActivity extends DrawerFragmentActivity implements OnItemCli
 			case 1:
 			default:
 				// replaceFragment(sellFragment());
+			case 3:
+				startChangePasscodeFragment();
+				break;
 			case 4:
 				onBackPressed();
 				break;
 		}
 	}
-
-	// protected SellFragment sellFragment() {
-	// if(sellFragment == null) {
-	// sellFragment = new SellFragment();
-	// }
-	// return sellFragment;
-	// }
+	
+	protected void startChangePasscodeFragment() {
+		Intent intent = new Intent(this, ChangePasscodeActivity.class);
+		startActivity(intent);
+		overridePendingTransition(R.anim.slide_up_in, R.anim.stay_still);
+	}
 }
