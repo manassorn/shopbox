@@ -58,6 +58,13 @@
         <item>Developer</item>
     </string-array>
 
+    <string-array name="reports_menu_array">
+        <item>รายงานขาย</item>
+        <item>รายงานคืน</item>
+        <item>รายงานฝาก/ถอน</item>
+        <item>รายงานนับเงิน</item>
+        <item>รายงานเงินเกิน/หาย</item>
+    </string-array>
     <string-array name="return_menu_array">
         <item>คืนสินค้า</item>
         <item>รายการคืนวันนี้</item>

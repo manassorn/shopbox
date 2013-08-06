@@ -18,9 +18,9 @@ import android.util.Log;
 import com.manassorn.shopbox.utils.SQLExceptionUtil;
 
 public class Dao<T, ID> {
-	public static final String dateFormat = "yyyy-MM-dd";
-	public static final String timeFormat = "HH:mm:ss";
-	public static final String dateTimeFormat = dateFormat + " " + timeFormat;
+	public static final String DATE_FORMAT = "yyyy-MM-dd";
+	public static final String TIME_FORMAT = "HH:mm:ss";
+	public static final String DATETIME_FORMAT = DATE_FORMAT + " " + TIME_FORMAT;
 	private static final String TAG = "Dao";
 	protected DbHelper dbHelper;
 	protected Class<T> clazz;
@@ -56,7 +56,7 @@ public class Dao<T, ID> {
 			IllegalAccessException {
 		Object val = field.get(data);
 		if (field.getType() == Date.class) {
-			SimpleDateFormat fmt = new SimpleDateFormat(dateTimeFormat);
+			SimpleDateFormat fmt = new SimpleDateFormat(DATETIME_FORMAT);
 			return fmt.format((Date) val);
 		}
 		return val;
@@ -75,7 +75,7 @@ public class Dao<T, ID> {
 		} else if (fieldType == String.class) {
 			field.set(instance, cursor.getString(columnIndex));
 		} else if (fieldType == Date.class) {
-			SimpleDateFormat fmt = new SimpleDateFormat(dateTimeFormat);
+			SimpleDateFormat fmt = new SimpleDateFormat(DATETIME_FORMAT);
 			Date date = null;
 			try {
 				date = fmt.parse(cursor.getString(columnIndex));
@@ -236,6 +236,8 @@ public class Dao<T, ID> {
 		private List<String> columnNames = new ArrayList<String>();
 		private Where where;
 		private String groupBy;
+		private String orderBy;
+		private String desc;
 
 		public QueryBuilder selectCursorId(String columnName) {
 			cursorIdColumnName = columnName;
@@ -274,6 +276,16 @@ public class Dao<T, ID> {
 			return this;
 		}
 
+		public QueryBuilder orderBy(String columnName, String desc) {
+			if (desc != null && desc.length() > 0 && !desc.equalsIgnoreCase("desc")
+					&& !desc.equalsIgnoreCase("asc")) {
+				throw new RuntimeException("orderBy desc isn't match 'desc' or 'asc'");
+			}
+			this.orderBy = columnName;
+			this.desc = desc;
+			return this;
+		}
+
 		public Cursor query() {
 			String sql = build();
 			return Dao.this.query(sql, args());
@@ -296,8 +308,14 @@ public class Dao<T, ID> {
 			if (where != null) {
 				sb.append(" ").append(where);
 			}
-			if (groupBy != null) {
+			if (groupBy != null && groupBy.length() > 0) {
 				sb.append(" group by ").append(groupBy);
+			}
+			if (orderBy != null && orderBy.length() > 0) {
+				sb.append(" order by ").append(orderBy);
+				if (desc != null && desc.length() > 0) {
+					sb.append(" ").append(desc);
+				}
 			}
 			return sb.toString();
 		}
@@ -325,6 +343,9 @@ public class Dao<T, ID> {
 
 			public Where raw(String sql, String[] args) {
 				sb.append(sql);
+				if(args != null) {
+					this.args.addAll(Arrays.asList(args));
+				}
 				return this;
 			}
 

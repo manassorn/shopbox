@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,7 +41,7 @@ public class ViewBillActivity extends Activity {
 			ListView listView = (ListView) findViewById(R.id.bill_item_list);
 			listView.setAdapter(new BillArrayAdapter(this, sellBill.getBillItems()));
 			
-			findViewById(R.id.confirm_button).setVisibility(View.GONE);
+			findViewById(R.id.submit_button).setVisibility(View.GONE);
 			
 			TextView totalText = (TextView) findViewById(R.id.total);
 			totalText.setText(String.format("ß%,.2f", sellBill.getTotal()));
@@ -54,6 +55,15 @@ public class ViewBillActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.view_bill, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			onBackPressed();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 }

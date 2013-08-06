@@ -13,6 +13,7 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
 	private SellFragment sellFragment;
 	private ReturnMenuFragment returnMenuFragment;
 	private DeveloperMenuFragment developerMenuFragment;
+	private ReportsMenuFragment reportsMenuFragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
         replaceFragment(sellFragment());
         
     	Intent intent = null;
-    	intent = new Intent(this, ChangePasscodeActivity.class);
+    	intent = new Intent(this, ReportsActivity.class);
     	startActivity(intent);
 	}
 
@@ -40,6 +41,9 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
         		break;
         	case 2:
         		replaceFragment(returnMenuFragment());
+        		break;
+        	case 13:
+        		replaceFragment(reportsMenuFragment());
         		break;
         	case 15:
         		startPasscodeActivity();
@@ -91,5 +95,12 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
 			developerMenuFragment = new DeveloperMenuFragment();
 		}
 		return developerMenuFragment;
+	}
+	
+	protected ReportsMenuFragment reportsMenuFragment() {
+		if(reportsMenuFragment == null) {
+			reportsMenuFragment = new ReportsMenuFragment();
+		}
+		return reportsMenuFragment;
 	}
 }

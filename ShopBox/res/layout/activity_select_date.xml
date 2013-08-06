@@ -5,24 +5,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-	<TextView
-	    android:id="@+id/date"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:paddingLeft="8dp"
-	    android:paddingRight="8dp"
-	    android:textColor="#fff"
-	    android:background="#666666"
-	    android:textSize="12sp"/>
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="#383938" >
+		<TextView
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textColor="#fff"
+		    android:text="เลือกใบเสร็จ" />
+		<TextView
+		    android:id="@+id/date"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:textColor="#fff" />
+    </RelativeLayout>
     
     <FrameLayout
         android:id="@+id/select_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     
-    <com.manassorn.shopbox.NonSwipablePager
-	    android:id="@+id/pager"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent" />
 </LinearLayout>

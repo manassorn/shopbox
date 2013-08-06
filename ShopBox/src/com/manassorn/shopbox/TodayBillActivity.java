@@ -61,7 +61,7 @@ public class TodayBillActivity extends Activity {
 				return true;
 			} else if ("CreatedTime".equals(columnName)) {
 				try {
-					Date date = new SimpleDateFormat(Dao.dateTimeFormat).parse(
+					Date date = new SimpleDateFormat(Dao.DATETIME_FORMAT).parse(
 							cursor.getString(columnIndex));
 					String friendlyDate = DateUtils.formatFriendly(TodayBillActivity.this, date);
 					((TextView) view).setText(friendlyDate);
