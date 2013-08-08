@@ -28,7 +28,7 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
         replaceFragment(sellFragment());
         
     	Intent intent = null;
-    	intent = new Intent(this, ReportsActivity.class);
+    	intent = new Intent(this, ManagerActivity.class);
     	startActivity(intent);
 	}
 
