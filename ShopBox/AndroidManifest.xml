@@ -124,6 +124,10 @@
             android:name="com.manassorn.shopbox.ReportsActivity"
             android:label="Reports" >
         </activity>
+        <activity
+            android:name="com.manassorn.shopbox.SignupShopkitActivity"
+            android:label="Signup" >
+        </activity>
     </application>
 
 </manifest>

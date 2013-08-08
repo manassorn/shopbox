@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<EditTextPreference
+		android:key="pref_shopName"
+		android:title="ชื่อร้าน"
+		android:summary="ไม่มี"
+		android:dialogTitle="ใส่ชื่อร้าน"
+		android:icon="@null" />
+	<EditTextPreference
+		android:key="pref_shopBranch"
+		android:title="สาขา"
+		android:summary="(ไม่จำเป็น)"
+		android:dialogTitle="ใส่ชื่อสาขา"
+		android:icon="@null" />
+	<EditTextPreference
+		android:key="pref_shopTaxId"
+		android:title="เลขประจำตัวผู้เสียภาษี"
+		android:summary="(ไม่จำเป็น)"
+		android:dialogTitle="ใช่เลขประจำตัวผู้เสียภาษี"
+		android:icon="@null" />
+	<com.manassorn.shopbox.ShopkitAccountPreference
+		android:key="pref_shopKitAccount"
+		android:title="บัญชี Shopkit"
+		android:summary="(ไม่จำเป็น)"
+		android:icon="@null"
+		android:widgetLayout="@layout/shopkit_account_pref">
+		
+	    <intent
+	        android:action="android.intent.action.VIEW"
+	        android:targetPackage="com.manassorn.shopbox"
+	        android:targetClass="com.manassorn.shopbox.SignupShopkitActivity" />
+	</com.manassorn.shopbox.ShopkitAccountPreference>
+</PreferenceScreen>

@@ -10,6 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class ManagerActivity extends DrawerFragmentActivity implements OnItemClickListener {
+	SettingsFragment settingsFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,9 @@ public class ManagerActivity extends DrawerFragmentActivity implements OnItemCli
 			case 1:
 			default:
 				// replaceFragment(sellFragment());
+			case 2:
+				replaceFragment(settingsFragment());
+				break;
 			case 3:
 				startChangePasscodeFragment();
 				break;
@@ -57,5 +61,12 @@ public class ManagerActivity extends DrawerFragmentActivity implements OnItemCli
 		Intent intent = new Intent(this, ChangePasscodeActivity.class);
 		startActivity(intent);
 		overridePendingTransition(R.anim.slide_up_in, R.anim.stay_still);
+	}
+	
+	protected SettingsFragment settingsFragment() {
+		if(settingsFragment == null) {
+			settingsFragment = new SettingsFragment();
+		}
+		return settingsFragment;
 	}
 }
