@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+	
+	<RelativeLayout
+	    android:id="@+id/total_value_container"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:padding="@dimen/activity_vertical_margin" >
+	    
+	    <TextView 
+	        android:id="@+id/avg_value"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:text="฿1,234.10"/>
+	    <TextView 
+	        android:id="@+id/avg_label"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/avg_value"
+	        android:textColor="#afafaf"
+	        android:text="ค่าเฉลี่ย"/>
+	    
+	    <TextView
+	        android:id="@+id/total_value"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:text="฿12,345.10" />
+	    <TextView
+	        android:id="@+id/total_label"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@id/total_value"
+	        android:textColor="#afafaf"
+	        android:text="มููลค่ารวม" />
+	</RelativeLayout>
+	
+	<FrameLayout
+	    android:id="@+id/chart_container"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_above="@id/total_value_container" />
+</RelativeLayout>

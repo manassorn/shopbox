@@ -83,6 +83,10 @@ public class DrawerFragmentActivity extends DrawerActivity implements OnClickLis
 	}
 
 	protected void replaceFragment(Fragment fragment) {
+		// reset actionbar
+		setTitle("");
+		setLogoTextVisible(View.VISIBLE);
+		
 		currentFragment = fragment;
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
@@ -107,5 +111,19 @@ public class DrawerFragmentActivity extends DrawerActivity implements OnClickLis
 	public void setMyActionBarColor(int color) {
 		View myActionBar = findViewById(R.id.my_actionbar);
 		myActionBar.setBackgroundColor(color);
+	}
+	
+	public void addMyActionBarView(View view) {
+		ViewGroup myActionBarLeft = (ViewGroup) findViewById(R.id.my_actionbar_left);
+		myActionBarLeft.addView(view);
+	}
+	
+	public void removeMyActionBarView(View view) {
+		ViewGroup myActionBarLeft = (ViewGroup) findViewById(R.id.my_actionbar_left);
+		myActionBarLeft.removeView(view);
+	}
+	
+	public void setLogoTextVisible(int visibility) {
+		findViewById(R.id.logo_text).setVisibility(visibility);
 	}
 }

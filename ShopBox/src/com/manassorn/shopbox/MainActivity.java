@@ -14,6 +14,7 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
 	private ReturnMenuFragment returnMenuFragment;
 	private DeveloperMenuFragment developerMenuFragment;
 	private ReportsMenuFragment reportsMenuFragment;
+	private StatsFragment statsFragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +26,13 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
         String[] menus = getResources().getStringArray(R.array.drawer_cashier_array);
         drawerListView.setAdapter(new DrawerListArrayAdapter(this, menus));
         
-        replaceFragment(sellFragment());
+        replaceFragment(statsFragment());
         
-    	Intent intent = null;
-    	intent = new Intent(this, ReportsActivity.class);
-    	startActivity(intent);
+//        replaceFragment(sellFragment());
+        
+//    	Intent intent = null;
+//    	intent = new Intent(this, ReportsActivity.class);
+//    	startActivity(intent);
 	}
 
 	@Override
@@ -44,6 +47,9 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
         		break;
         	case 13:
         		replaceFragment(reportsMenuFragment());
+        		break;
+        	case 14:
+        		replaceFragment(statsFragment());
         		break;
         	case 15:
         		startPasscodeActivity();
@@ -102,5 +108,12 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
 			reportsMenuFragment = new ReportsMenuFragment();
 		}
 		return reportsMenuFragment;
+	}
+	
+	protected StatsFragment statsFragment() {
+		if(statsFragment == null) {
+			statsFragment = new StatsFragment();
+		}
+		return statsFragment;
 	}
 }

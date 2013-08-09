@@ -58,6 +58,10 @@
         <item>Developer</item>
     </string-array>
 
+    <string-array name="stats_type_array">
+        <item>รายได้</item>
+        <item>อื่นๆ</item>
+    </string-array>
     <string-array name="reports_menu_array">
         <item>รายงานขาย</item>
         <item>รายงานคืน</item>
