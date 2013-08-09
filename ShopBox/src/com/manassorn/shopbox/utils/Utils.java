@@ -4,6 +4,13 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.widget.Toast;
+
+import com.manassorn.shopbox.SettingsFragment;
+
 public class Utils {
 
 	public static String sha1(String toHash) throws NoSuchAlgorithmException,
@@ -25,5 +32,28 @@ public class Utils {
 			throw e;
 		}
 		return hash;
+	}
+	
+	public static boolean verifyPasscode(Context context, String text) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		String passcodeSha1 = prefs.getString(SettingsFragment.PREF_PASSCODE, SettingsFragment.PREF_PASSCODE_DEFAULT_SHA1);
+		
+		try {
+			return Utils.sha1(text).equals(passcodeSha1);
+		} catch (Exception e) {
+			Toast.makeText(context, "มือถือไม่สนับสนุน SHA1", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+	}
+	
+	public static boolean changePasscode(Context context, String text) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		
+		try {
+			return prefs.edit().putString(SettingsFragment.PREF_PASSCODE, Utils.sha1(text)).commit();
+		} catch (Exception e) {
+			Toast.makeText(context, "มือถือไม่สนับสนุน SHA1", Toast.LENGTH_SHORT).show();
+			return false;
+		}
 	}
 }

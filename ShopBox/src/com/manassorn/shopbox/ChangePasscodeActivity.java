@@ -14,11 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.manassorn.shopbox.utils.KeyboardUtil;
+import com.manassorn.shopbox.utils.Utils;
 
 public class ChangePasscodeActivity extends Activity implements OnClickListener {
 	EditText hiddenPasscode;
@@ -112,7 +112,7 @@ public class ChangePasscodeActivity extends Activity implements OnClickListener 
 	}
 
 	void checkPasscode() {
-		if (verifyPasscode(hiddenPasscode.getText().toString())) {
+		if (Utils.verifyPasscode(this, hiddenPasscode.getText().toString())) {
 			status.setVisibility(View.GONE);
 			hiddenNewPasscode.requestFocus();
 			scrollTo(R.id.new_passcode_label);
@@ -126,23 +126,13 @@ public class ChangePasscodeActivity extends Activity implements OnClickListener 
 		}
 	}
 
-	boolean verifyPasscode(String text) {
-		//TODO - 
-//		SharedPreferences prefs = PreferenceManager
-//				.getDefaultSharedPreferences(this);
-//		String passcode = prefs.getString("PASSCODE", "A");
-//		return text.equals(passcode);
-		
-		return text.equals("1234");
-	}
-
 	void checkConfirmPasscode() {
 		String newPasscode = hiddenNewPasscode.getText().toString();
 		String confirmPasscode = hiddenConfirmPasscode.getText().toString();
 		if(newPasscode.equals(confirmPasscode)) {
-			changePasscode(newPasscode);
-			
-			new AlertDialog.Builder(this).setMessage("เปลี่ยนรหัสผ่านเรียบร้อย")
+			boolean result = Utils.changePasscode(this, newPasscode);
+			String message = result ? "เปลี่ยนรหัสเรียบร้อย" : "เปลี่ยนรหัสไม่ได้";
+			new AlertDialog.Builder(this).setMessage(message)
 			.setNeutralButton("ตกลง",  new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					onBackPressed();
@@ -166,10 +156,6 @@ public class ChangePasscodeActivity extends Activity implements OnClickListener 
 			Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 			v.vibrate(1000);
 		}
-	}
-	
-	void changePasscode(String newPasscode) {
-		//TODO - change passcode
 	}
 	
 	void scrollTo(int targetResId) {

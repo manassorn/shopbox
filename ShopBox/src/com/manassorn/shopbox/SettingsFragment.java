@@ -10,6 +10,8 @@ import android.preference.PreferenceScreen;
 public class SettingsFragment extends PreferenceFragment implements
 		OnSharedPreferenceChangeListener {
 	public static final String PREF_PASSCODE = "pref_passcode";
+	public static final String PREF_PASSCODE_DEFAULT = "2580";
+	public static final String PREF_PASSCODE_DEFAULT_SHA1 = "0EBCDC7BABC0DE9A1D6C7D1C180BFCB8183FA492";
 	public static final String PREF_SHOP_NAME = "pref_shopName";
 	public static final String PREF_SHOP_BRANCH = "pref_shopBranch";
 	public static final String PREF_SHOP_TAX_ID = "pref_shopTaxId";

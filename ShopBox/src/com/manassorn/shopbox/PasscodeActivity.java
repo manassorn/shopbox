@@ -1,11 +1,18 @@
 package com.manassorn.shopbox;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+
+import com.manassorn.shopbox.utils.Utils;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -13,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class PasscodeActivity extends Activity implements TextWatcher, OnClickListener {
 	EditText[] passcodeDigits = new EditText[4];
@@ -78,18 +86,8 @@ public class PasscodeActivity extends Activity implements TextWatcher, OnClickLi
 		imm.showSoftInput(passcode, InputMethodManager.SHOW_IMPLICIT);
 	}
 
-	boolean verifyPasscode(String text) {
-		//TODO - 
-//		SharedPreferences prefs = PreferenceManager
-//				.getDefaultSharedPreferences(this);
-//		String passcode = prefs.getString("PASSCODE", "A");
-//		return text.equals(passcode);
-		
-		return text.equals("1234");
-	}
-
 	void checkPasscode(String text) {
-		if (verifyPasscode(text)) {
+		if (Utils.verifyPasscode(this, text)) {
 			findViewById(R.id.incorrect_passcode).setVisibility(View.GONE);
 			findViewById(R.id.input_passcode).setVisibility(View.VISIBLE);
 			setResult(RESULT_OK);
