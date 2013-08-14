@@ -1,7 +1,5 @@
 package com.manassorn.shopbox;
 
-import com.manassorn.shopbox.utils.Utils;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,9 +26,7 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
         String[] menus = getResources().getStringArray(R.array.drawer_cashier_array);
         drawerListView.setAdapter(new DrawerListArrayAdapter(this, menus));
         
-        replaceFragment(statsFragment());
-        
-//        replaceFragment(sellFragment());
+        replaceFragment(sellFragment());
         
 //    	Intent intent = null;
 //    	intent = new Intent(this, ReportsActivity.class);

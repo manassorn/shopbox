@@ -1,4 +1,4 @@
-create table Category (
+CREATE TABLE Category (
 		Id integer primary key autoincrement,
 		ParentId integer not null,
 		Name char(50) not null
@@ -20,11 +20,6 @@ CREATE TABLE Supplement (
 		Constant real default 0,
 		Priority integer default 10
 );
-CREATE TABLE Bill (
-		Id integer primary key autoincrement,
-		CreatedTime text,  
-		ReceiveMoney real default 0
-);
 CREATE TABLE BillProductItem (
 		BillId integer not null,
 		Sequence integer,
@@ -42,6 +37,7 @@ CREATE TABLE BillSupplementItem (
 		SupplementType char(8) not null,
 		SupplementPercent real default 0, 
 		SupplementConstant real default 0,
+		SupplementPriority integer default 10,
 		Total double not null
 );
 CREATE TABLE BillSubTotalItem (
@@ -49,10 +45,33 @@ CREATE TABLE BillSubTotalItem (
 		Sequence integer,
 		SubTotal double not null
 );
+CREATE TABLE SellBill (
+		Id integer primary key autoincrement,
+		CreatedTime text,  
+		Total real default 0,
+		ShopAttributesId integer,
+		ReceiveMoney real default 0
+);
+CREATE TABLE ReturnBill (
+		Id integer primary key autoincrement,
+		CreatedTime text,  
+		Total real default 0,
+		ShopAttributesId integer,
+		SellBillId integer
+);
+CREATE TABLE ShopAttributes (
+		Id integer primary key autoincrement,
+		ShopName char(100) not null,
+		BranchName char(100),
+		TaxId char(100)
+);
+
+UPDATE SQLITE_SEQUENCE SET seq = 10000000 WHERE name = 'SellBill';
+UPDATE SQLITE_SEQUENCE SET seq = 20000000 WHERE name = 'ReturnBill';
 
 -- CATEGORIES
 INSERT INTO Category (Id, ParentId, Name)
-VALUES (0, -1, 'หมวดหมู่แรก');
+VALUES (0, -1, 'หมวดหมู่หลัก');
 INSERT INTO Category (Id, ParentId, Name)
 VALUES (1, 0, 'หมวดหมู่ย่อย');
 
@@ -80,3 +99,6 @@ VALUES ('ค่าบริการ', 'PERCENT', 10, 9);
 INSERT INTO Supplement (Name, Type, Constant, Priority)
 VALUES ('ส่วนลดคูปอง', 'CONSTANT', -10, 20);
 
+-- SHOP ATTRIBUTES
+INSERT INTO ShopAttributes (ShopName, BranchName, TaxId)
+VALUES ('ชื่อร้าน', '', '');

@@ -8,7 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -49,6 +51,26 @@ public class Dao<T, ID> {
 		if (cursor != null && cursor.moveToFirst()) {
 			return mapRow(cursor);
 		}
+		return null;
+	}
+
+	public Cursor queryForEq(String columnName, Object val) {
+		Field field = tableInfo.getFieldTypeByColumnName(columnName);
+		return queryForEq(field, val);
+	}
+
+	public Cursor queryForEq(Field field, Object val) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("select * from ").append(tableInfo.getTableName());
+		sb.append(" where " + field.getName()).append("=?");
+		return query(sb.toString(), new String[] { val.toString() });
+	}
+
+	public List<T> getForEq(String columnName, Object val) {
+		return mapRows(queryForEq(columnName, val));
+	}
+
+	public T queryForFirst(/* PreparedQuery<T> preparedQuery */String sql) {
 		return null;
 	}
 
@@ -94,26 +116,6 @@ public class Dao<T, ID> {
 		}
 	}
 
-	public Cursor queryForEq(String columnName, Object val) {
-		Field field = tableInfo.getFieldTypeByColumnName(columnName);
-		return queryForEq(field, val);
-	}
-
-	public Cursor queryForEq(Field field, Object val) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("select * from ").append(tableInfo.getTableName());
-		sb.append(" where " + field.getName()).append("=?");
-		return query(sb.toString(), new String[] { val.toString() });
-	}
-
-	public List<T> getForEq(String columnName, Object val) {
-		return mapRows(queryForEq(columnName, val));
-	}
-
-	public T queryForFirst(/* PreparedQuery<T> preparedQuery */String sql) {
-		return null;
-	}
-
 	public Cursor query(String sql, String[] args) {
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery(sql, args);
@@ -141,6 +143,9 @@ public class Dao<T, ID> {
 	}
 
 	protected T mapRow(Cursor cursor) {
+		if(cursor.getCount() == 0) {
+			return null;
+		}
 		T instance = null;
 		try {
 			instance = tableInfo.getConstructor().newInstance();
@@ -224,6 +229,41 @@ public class Dao<T, ID> {
 		}
 	}
 
+	public int update(T data) throws SQLException {
+		if (data == null) {
+			return 0;
+		}
+		ContentValues values = new ContentValues();
+		for (Field field : tableInfo.getFields()) {
+			try {
+				DatabaseField databaseField = field.getAnnotation(DatabaseField.class);
+				if (!databaseField.generatedId()) {
+					values.put(field.getName(), getFieldValue(field, data).toString());
+				}
+			} catch (IllegalArgumentException e) {
+				throw SQLExceptionUtil.create("Could not assign object '" + data + "' to field "
+						+ field.getName(), e);
+			} catch (IllegalAccessException e) {
+				throw SQLExceptionUtil.create("Could not assign object '" + data + "' to field "
+						+ field.getName(), e);
+			}
+		}
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
+		Field idField = tableInfo.getIdField();
+		try {
+			return db.update(tableInfo.getTableName(), values, idField.getName() + "=?",
+					new String[] { getFieldValue(idField, data).toString() });
+		} catch (IllegalArgumentException e) {
+			throw SQLExceptionUtil.create("Could not assign object '" + data + "' to ID field "
+					+ idField.getName(), e);
+		} catch (IllegalAccessException e) {
+			throw SQLExceptionUtil.create("Could not assign object '" + data + "' to ID field "
+					+ idField.getName(), e);
+		} finally {
+			db.close();
+		}
+	}
+
 	public QueryBuilder queryBuilder() {
 		// if(queryBuilder == null) {
 		// queryBuilder = new QueryBuilder();
@@ -231,10 +271,49 @@ public class Dao<T, ID> {
 		return new QueryBuilder();
 	}
 
+//	public class UpdateBuilder {
+//		private Map<String, Object> updateValues = new HashMap<String, Object>();
+//		private Where where;
+//
+//		public UpdateBuilder updateColumnValue(String columnName, Object value) {
+//			updateValues.put(columnName, value);
+//			return this;
+//		}
+//
+//		public Where where() {
+//			if (where == null) {
+//				where = new Where();
+//			}
+//			return where;
+//		}
+//
+//		public String build() {
+//			StringBuilder sb = new StringBuilder();
+//			sb.append("update ").append(tableInfo.getTableName());
+//			sb.append(" set ");
+//			appendUpdateValues(sb);
+//			if (where != null) {
+//				sb.append(" ").append(where);
+//			}
+//			return sb.toString();
+//		}
+//
+//		protected void appendUpdateValues(StringBuilder sb) {
+//			StringBuilder updateValuesSb = new StringBuilder();
+//			for (String columnName : updateValues.keySet()) {
+//				if (updateValuesSb.length() > 0) {
+//					updateValuesSb.append(",");
+//				}
+//				updateValuesSb.append(columnName).append("=");
+//			}
+//			sb.append(updateValuesSb);
+//		}
+//	}
+
 	public class QueryBuilder {
 		private String cursorIdColumnName;
 		private List<String> columnNames = new ArrayList<String>();
-		private Where where;
+		private Where where = new Where();
 		private String groupBy;
 		private String orderBy;
 		private String desc;
@@ -284,6 +363,11 @@ public class Dao<T, ID> {
 			this.orderBy = columnName;
 			this.desc = desc;
 			return this;
+		}
+
+		public long count() {
+			Cursor cursor = query();
+			return cursor.getCount();
 		}
 
 		public Cursor query() {
@@ -336,36 +420,36 @@ public class Dao<T, ID> {
 			}
 			sb.append(columnNameSb);
 		}
+	}
 
-		public class Where {
-			StringBuilder sb = new StringBuilder();
-			List<String> args = new ArrayList<String>();
+	public class Where {
+		StringBuilder sb = new StringBuilder();
+		List<String> args = new ArrayList<String>();
 
-			public Where raw(String sql, String[] args) {
-				sb.append(sql);
-				if(args != null) {
-					this.args.addAll(Arrays.asList(args));
-				}
-				return this;
+		public Where raw(String sql, String[] args) {
+			sb.append(sql);
+			if (args != null) {
+				this.args.addAll(Arrays.asList(args));
 			}
+			return this;
+		}
 
-			public Where like(String columnName, String arg) {
-				sb.append(columnName).append(" like ?");
-				this.args.add(arg);
-				return this;
-			}
+		public Where like(String columnName, String arg) {
+			sb.append(columnName).append(" like ?");
+			this.args.add(arg);
+			return this;
+		}
 
-			public String[] args() {
-				return args.toArray(new String[args.size()]);
-			}
+		public String[] args() {
+			return args.toArray(new String[args.size()]);
+		}
 
-			@Override
-			public String toString() {
-				if (sb.length() > 0) {
-					sb.insert(0, "where ");
-				}
-				return sb.toString();
+		@Override
+		public String toString() {
+			if (sb.length() > 0) {
+				sb.insert(0, "where ");
 			}
+			return sb.toString();
 		}
 	}
 }

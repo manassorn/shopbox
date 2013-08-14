@@ -1,6 +1,7 @@
 package com.manassorn.shopbox;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -18,13 +19,18 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.manassorn.shopbox.db.DbHelper;
+import com.manassorn.shopbox.db.ShopAttributesDao;
+import com.manassorn.shopbox.utils.DateUtils;
 import com.manassorn.shopbox.value.BillItem;
 import com.manassorn.shopbox.value.BillProductItem;
 import com.manassorn.shopbox.value.BillSubTotalItem;
 import com.manassorn.shopbox.value.BillSupplementItem;
+import com.manassorn.shopbox.value.ShopAttributes;
 import com.manassorn.shopbox.value.Supplement;
 
 public class ConfirmBillActivity extends Activity implements OnClickListener {
+	ShopAttributes shopAttributes;
 	ArrayList<BillItem> billItems;
 	double total;
 
@@ -35,18 +41,11 @@ public class ConfirmBillActivity extends Activity implements OnClickListener {
 
 		// action bar
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-		// bill
-		Bundle bundle = getIntent().getExtras();
-		if (bundle != null) {
-			billItems = bundle.getParcelableArrayList("BILL_ITEM_ARRAY");
-		}
-		ListView listView = (ListView) findViewById(R.id.bill_item_list);
-		listView.setAdapter(new BillArrayAdapter(this, billItems));
-
-		BillSubTotalItem totalItem = (BillSubTotalItem) billItems.get(billItems.size() - 1);
-		total = totalItem.getSubTotal();
-		setTotalView(total);
+		
+		initShopAttributesView();
+		initBillInfoView();
+		initTotalView();
+		initBillItemsView();
 
 		Button submitButton = (Button) findViewById(R.id.submit_button);
 		submitButton.setOnClickListener(this);
@@ -66,6 +65,63 @@ public class ConfirmBillActivity extends Activity implements OnClickListener {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	protected void setTotalView(double total) {
+		TextView totalView = (TextView) findViewById(R.id.total);
+		totalView.setText(String.format("ß%,.2f", total));
+	}
+
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.submit_button:
+				startReceiveMoneyActivity();
+				break;
+		}
+
+	}
+	
+	protected void initShopAttributesView() {
+		DbHelper dbHelper = DbHelper.getHelper(this);
+		ShopAttributesDao shopAttributesDao = ShopAttributesDao.getInstance(dbHelper);
+		shopAttributes = shopAttributesDao.getForLast();
+		
+		TextView shopName = (TextView) findViewById(R.id.shop_name);
+		shopName.setText(shopAttributes.getShopName());
+		// TODO - init shop branch
+		TextView taxId= (TextView) findViewById(R.id.shop_tax_id);
+		taxId.setText(shopAttributes.getTaxId());
+	}
+	
+	protected void initBillInfoView() {
+		TextView billCreatedTime = (TextView) findViewById(R.id.bill_created_time);
+		billCreatedTime.setText(DateUtils.billDateTimeFormat.format(new Date()));
+		// TODO - change bill id pattern to each type of bill
+		TextView billId = (TextView) findViewById(R.id.bill_id);
+		billId.setText("#1XXXXXXX");
+	}
+	
+	protected void initTotalView() {
+		total = getIntent().getDoubleExtra("TOTAL", 0);
+		setTotalView(total);
+	}
+	
+	protected void initBillItemsView() {
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null) {
+			billItems = bundle.getParcelableArrayList("BILL_ITEM_ARRAY");
+		}
+		ListView listView = (ListView) findViewById(R.id.bill_item_list);
+		listView.setAdapter(new BillArrayAdapter(this, billItems));
+	}
+
+	protected void startReceiveMoneyActivity() {
+		Intent intent = new Intent(this, ReceiveMoneyActivity.class);
+		intent.putExtra("SHOP_ATTRIBUTES", shopAttributes);
+		intent.putParcelableArrayListExtra("BILL_ITEM_ARRAY", billItems);
+		intent.putExtra("TOTAL", total);
+		startActivity(intent);
 	}
 
 	public static class BillArrayAdapter extends ArrayAdapter<BillItem> {
@@ -138,27 +194,5 @@ public class ConfirmBillActivity extends Activity implements OnClickListener {
 
 			return rowView;
 		}
-	}
-
-	protected void setTotalView(double total) {
-		TextView totalView = (TextView) findViewById(R.id.total);
-		totalView.setText(String.format("ß%,.2f", total));
-	}
-
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.submit_button:
-				startReceiveMoneyActivity();
-				break;
-		}
-
-	}
-
-	protected void startReceiveMoneyActivity() {
-		Intent intent = new Intent(this, ReceiveMoneyActivity.class);
-		intent.putParcelableArrayListExtra("BILL_ITEM_ARRAY", billItems);
-		intent.putExtra("TOTAL", total);
-		startActivity(intent);
 	}
 }

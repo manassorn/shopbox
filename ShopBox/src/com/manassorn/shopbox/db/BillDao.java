@@ -18,6 +18,7 @@ public abstract class BillDao<T extends Bill> extends Dao<T, Integer> {
 	public static final String ID = "Id";
 	public static final String CREATED_TIME = "CreatedTime";
 	public static final String RECEIVE_MONEY = "ReceiveMoney";
+	public static final String SHOP_ATTRIBUTES_ID = "ShopAttributesId";
 	public static final String TOTAL = "Total";
 	static final String BILL_YEAR_FORMAT = "yyyy";
 	static final String BILL_MONTH_FORMAT = "MMM";

@@ -15,6 +15,8 @@ public class Bill implements Parcelable {
 	private Date createdTime;
 	@DatabaseField
 	private double total;
+	@DatabaseField
+	private int shopAttributesId;
 	
 	private ArrayList<BillItem> billItems;
 
@@ -88,5 +90,13 @@ public class Bill implements Parcelable {
 
 	public void setTotal(double total) {
 		this.total = total;
+	}
+
+	public int getShopAttributesId() {
+		return shopAttributesId;
+	}
+
+	public void setShopAttributesId(int shopAttributesId) {
+		this.shopAttributesId = shopAttributesId;
 	}
 }

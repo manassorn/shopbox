@@ -20,15 +20,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.manassorn.shopbox.R;
 import com.manassorn.shopbox.EditOrderAdapter.OnProductAmountChangedListener;
-import com.manassorn.shopbox.value.Bill;
 import com.manassorn.shopbox.value.BillItem;
 import com.manassorn.shopbox.value.BillProductItem;
 import com.manassorn.shopbox.value.BillSupplementItem;
 import com.manassorn.shopbox.value.Order;
 import com.manassorn.shopbox.value.OrderProduct;
-import com.manassorn.shopbox.value.Product;
 import com.manassorn.shopbox.value.Supplement;
 
 public class EditOrderActivity extends Activity implements OnClickListener,
@@ -273,6 +270,7 @@ public class EditOrderActivity extends Activity implements OnClickListener,
 		
 		Intent intent = new Intent(this, ConfirmBillActivity.class);
 		intent.putParcelableArrayListExtra("BILL_ITEM_ARRAY", billItemList);
+		intent.putExtra("TOTAL", orderManager.getTotal());
 		startActivity(intent);
 	}
 	

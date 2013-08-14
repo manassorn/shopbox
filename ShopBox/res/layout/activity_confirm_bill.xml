@@ -45,33 +45,35 @@
         android:orientation="vertical" >
 
         <com.manassorn.shopbox.PimpdeedTextView
-	        android:id="@+id/store_name"
+	        android:id="@+id/shop_name"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_horizontal"
 	        android:textSize="20sp"
-	        android:text="ร้าน ABC" />
+	        android:text="ชื่อร้าน" />
 	    
         <com.manassorn.shopbox.PimpdeedTextView
-	        android:id="@+id/tax_id"
+	        android:id="@+id/shop_tax_id"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_horizontal"
 	        android:textSize="18sp"
-	        android:text="เลขที่ 01234567890123" />
+	        android:text="TAX ID" />
 	    
 	    <FrameLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content" >
         	<com.manassorn.shopbox.PimpdeedTextView
+        	    android:id="@+id/bill_id"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="#100001256" />
+	            android:text="#1XXXXXXXX" />
         	<com.manassorn.shopbox.PimpdeedTextView
+        	    android:id="@+id/bill_created_time"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="right"
-	            android:text="09/03/2013 12:12" />
+	            android:text="09/03/2013 XX:XX" />
 	    </FrameLayout>
 	    
 		    

@@ -4,7 +4,7 @@
         android:id="@+id/action_today"
         android:orderInCategory="100"
         android:showAsAction="always|withText"
-        android:titleCondensed="วันนี้"
-        android:title="วันนี้" />
+        android:title="วันนี้"
+        android:actionLayout="@layout/action_today" />
 
 </menu>

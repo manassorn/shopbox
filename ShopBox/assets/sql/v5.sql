@@ -1,1 +1,0 @@
-alter table Bill rename to SellBill;

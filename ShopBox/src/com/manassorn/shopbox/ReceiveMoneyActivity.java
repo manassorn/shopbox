@@ -24,13 +24,15 @@ import com.manassorn.shopbox.db.DbHelper;
 import com.manassorn.shopbox.db.SellBillDao;
 import com.manassorn.shopbox.value.BillItem;
 import com.manassorn.shopbox.value.SellBill;
+import com.manassorn.shopbox.value.ShopAttributes;
 
 public class ReceiveMoneyActivity extends Activity implements OnClickListener,
 		OnEditorActionListener {
 	private static final String TAG = ReceiveMoneyActivity.class.getSimpleName();
+	private ShopAttributes shopAttributes;
 	private ArrayList<BillItem> billItems;
-	private int billId;
 	private double total = 0;
+	private int billId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +42,9 @@ public class ReceiveMoneyActivity extends Activity implements OnClickListener,
 		// action bar
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		Button ok = (Button) findViewById(R.id.ok_button);
-		ok.setOnClickListener(this);
-
-		Bundle bundle = getIntent().getExtras();
-		if (bundle != null) {
-			billItems = bundle.getParcelableArrayList("BILL_ITEM_ARRAY");
-			total = bundle.getDouble("TOTAL");
-		}
-
-		TextView totalView = (TextView) findViewById(R.id.total);
-		totalView.setText(String.format("฿%,.2f", total));
-
-		EditText receiveMoneyText = (EditText) findViewById(R.id.receive_money);
-		receiveMoneyText.setOnEditorActionListener(this);
+		initParameters();
+		initTotalView();
+		bindListener();
 	}
 
 	@Override
@@ -89,6 +80,28 @@ public class ReceiveMoneyActivity extends Activity implements OnClickListener,
 		}
 		return false;
 	}
+	
+	protected void initParameters() {
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null) {
+			shopAttributes = bundle.getParcelable("SHOP_ATTRIBUTES");
+			billItems = bundle.getParcelableArrayList("BILL_ITEM_ARRAY");
+			total = bundle.getDouble("TOTAL");
+		}
+	}
+	
+	protected void initTotalView() {
+		TextView totalView = (TextView) findViewById(R.id.total);
+		totalView.setText(String.format("฿%,.2f", total));
+	}
+	
+	protected void bindListener() {
+		EditText receiveMoneyText = (EditText) findViewById(R.id.receive_money);
+		receiveMoneyText.setOnEditorActionListener(this);
+
+		Button ok = (Button) findViewById(R.id.ok_button);
+		ok.setOnClickListener(this);
+	}
 
 	protected boolean validateInput() {
 		EditText receiveMoneyText = (EditText) findViewById(R.id.receive_money);
@@ -105,24 +118,21 @@ public class ReceiveMoneyActivity extends Activity implements OnClickListener,
 		return true;
 	}
 
-	protected int insertBill() {
+	protected int insertBill() throws SQLException {
 		SellBill sellBill = new SellBill(billItems);
+		sellBill.setShopAttributesId(shopAttributes.getId());
 		sellBill.setReceiveMoney(getReceiveMoney());
 		// long billId = billDbAdapter.insertBill(bill);
 		DbHelper dbHelper = DbHelper.getHelper(this);
 		SellBillDao sellBillDao = SellBillDao.getInstance(dbHelper);
 		BillItemDao billItemDao = BillItemDao.getInstance(dbHelper);
-		try {
-			int billId = sellBillDao.insert(sellBill);
-			for (BillItem billItem : billItems) {
-				billItem.setBillId(billId);
-			}
-			billItemDao.insert(billItems);
-		} catch (SQLException e) {
-			Log.e(TAG, "Database Error", e);
+		billId = sellBillDao.insert(sellBill);
+		for (BillItem billItem : billItems) {
+			billItem.setBillId(billId);
 		}
+		billItemDao.insert(billItems);
 
-		return (int) billId;
+		return billId;
 	}
 
 	protected void startGiveChangeActivity() {
@@ -142,8 +152,13 @@ public class ReceiveMoneyActivity extends Activity implements OnClickListener,
 
 	protected void ok() {
 		if (validateInput()) {
-			billId = insertBill();
-			startGiveChangeActivity();
+			try {
+				billId = insertBill();
+				startGiveChangeActivity();
+			} catch (SQLException e) {
+				Log.e(TAG, "Database Error", e);
+				Toast.makeText(this, "ไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 }

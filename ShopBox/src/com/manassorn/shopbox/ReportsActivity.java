@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 import com.manassorn.shopbox.SelectBillByDateFragment.OnSelectBillByDate;
 import com.manassorn.shopbox.db.BillDao;
@@ -35,8 +37,15 @@ public class ReportsActivity extends Activity implements OnSelectBillByDate {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO - display text 'Today' at menu item 
-		getMenuInflater().inflate(R.menu.reports, menu);
+		getMenuInflater().inflate(R.menu.bills, menu);
+		final MenuItem item = menu.findItem(R.id.action_today);
+		item.getActionView().setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				onOptionsItemSelected(item);
+			}
+		});
 		return super.onCreateOptionsMenu(menu);
 	}
 

@@ -8,10 +8,12 @@ import java.util.Date;
 import android.content.Context;
 
 public class DateUtils {
+	// in case use in multiple threads, create own SimpleDateformat instead
 	public static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
 	public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
 	public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 	public static SimpleDateFormat dayMonthFormat = new SimpleDateFormat("dd MMM");
+	public static SimpleDateFormat billDateTimeFormat = new SimpleDateFormat("d/MM/yyyy HH:mm");
 
 	public static String formatFriendly(Context context, Date date) {
 		DateFormat timeFormat = android.text.format.DateFormat
