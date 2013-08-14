@@ -22,7 +22,7 @@ public class ReportsMenuFragment extends Fragment implements OnItemClickListener
         View rootView = inflater.inflate(R.layout.menu_list, container, false);
         
         // content
-		String[] sellMenus = getResources().getStringArray(R.array.bills_menu_array);
+		String[] sellMenus = getResources().getStringArray(R.array.reports_menu_array);
         listView = (ListView) rootView.findViewById(R.id.menu_list);
         listView.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.menu_list_item, sellMenus));
         listView.setOnItemClickListener(this);

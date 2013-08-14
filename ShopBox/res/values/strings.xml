@@ -22,7 +22,7 @@
     <string name="cash_count">นับเงิน</string>
     <string name="cash_miss">เงินเกิน/หาย</string>
     <string name="other">+อื่นๆ</string>
-    <string name="bills">ใบเสร็จ</string>
+    <string name="reports">รายงาน</string>
     <string name="stat">สถิติ</string>
     <string name="manager">ผู้จัดการ</string>
     <string name="wait_sync">รอ sync</string>
@@ -51,7 +51,7 @@
         <item>@string/cash_count</item>
         <item>@string/cash_miss</item>
         <item>@string/other</item>
-        <item>@string/bills</item>
+        <item>@string/reports</item>
         <item>@string/stat</item>
         <item>@string/manager</item>
         <item>@string/wait_sync</item>
@@ -62,7 +62,7 @@
         <item>รายได้</item>
         <item>อื่นๆ</item>
     </string-array>
-    <string-array name="bills_menu_array">
+    <string-array name="reports_menu_array">
         <item>ใบเสร็จขาย</item>
         <item>ใบเสร็จคืน</item>
         <item>ใบบันทึกฝาก/ถอน</item>
