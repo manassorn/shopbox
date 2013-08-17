@@ -1,18 +1,13 @@
 package com.manassorn.shopbox.value;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.manassorn.shopbox.db.DatabaseField;
 
-public class Bill implements Parcelable {
-	@DatabaseField(id=true, generatedId=true)
-	private int id;
-	@DatabaseField
-	private Date createdTime;
+public class Bill extends Report {
 	@DatabaseField
 	private double total;
 	@DatabaseField
@@ -26,7 +21,6 @@ public class Bill implements Parcelable {
 	
 	public Bill(ArrayList<BillItem> billItems) {
 		this.billItems = billItems;
-		this.createdTime = new Date();
 		if(billItems.size() > 0) {
 			total = ((BillSubTotalItem)billItems.get(billItems.size() - 1)).getSubTotal();
 		}
@@ -39,6 +33,9 @@ public class Bill implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
+		super.writeToParcel(dest, flags);
+		dest.writeDouble(total);
+		dest.writeInt(shopAttributesId);
 		dest.writeList(billItems);
 	}
 
@@ -53,24 +50,11 @@ public class Bill implements Parcelable {
 	};
 
 	protected Bill(Parcel in) {
+		super(in);
+		total = in.readDouble();
+		shopAttributesId = in.readInt();
 		billItems = new ArrayList<BillItem>();
 		in.readList(billItems, BillItem.class.getClassLoader());
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int billId) {
-		this.id = billId;
-	}
-	
-	public Date getCreatedTime() {
-		return createdTime;
-	}
-
-	public void setCreatedTime(Date createdTime) {
-		this.createdTime = createdTime;
 	}
 
 	public ArrayList<BillItem> getBillItems() {

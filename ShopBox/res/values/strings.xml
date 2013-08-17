@@ -18,8 +18,7 @@
     <string name="product_count">นับสินค้า</string>
     <string name="product_miss">เกิน/หาย</string>
     <string name="cash">+เงินสด</string>
-    <string name="deposit_withdraw">เงินเกิน/หาย</string>
-    <string name="cash_count">นับเงิน</string>
+    <string name="cash_transfer">โอนเข้า/โอนออก</string>
     <string name="cash_miss">เงินเกิน/หาย</string>
     <string name="other">+อื่นๆ</string>
     <string name="reports">รายงาน</string>
@@ -47,8 +46,7 @@
         <item>@string/product_count</item>
         <item>@string/product_miss</item>
         <item>@string/cash</item>
-        <item>@string/deposit_withdraw</item>
-        <item>@string/cash_count</item>
+        <item>@string/cash_transfer</item>
         <item>@string/cash_miss</item>
         <item>@string/other</item>
         <item>@string/reports</item>

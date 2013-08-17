@@ -47,14 +47,14 @@ CREATE TABLE BillSubTotalItem (
 );
 CREATE TABLE SellBill (
 		Id integer primary key autoincrement,
-		CreatedTime text,  
+		CreatedTime char(24), 
 		Total real default 0,
 		ShopAttributesId integer,
 		ReceiveMoney real default 0
 );
 CREATE TABLE ReturnBill (
 		Id integer primary key autoincrement,
-		CreatedTime text,  
+		CreatedTime char(24),  
 		Total real default 0,
 		ShopAttributesId integer,
 		SellBillId integer
@@ -65,9 +65,18 @@ CREATE TABLE ShopAttributes (
 		BranchName char(100),
 		TaxId char(100)
 );
+CREATE TABLE CashTransactionReport (
+		Id integer primary key autoincrement,
+		CreatedTime char(24),
+		TransactionType char(10) not null,
+		Amount real not null,
+		cashRemain real not null
+);
+
 
 UPDATE SQLITE_SEQUENCE SET seq = 10000000 WHERE name = 'SellBill';
 UPDATE SQLITE_SEQUENCE SET seq = 20000000 WHERE name = 'ReturnBill';
+UPDATE SQLITE_SEQUENCE SET seq = 30000000 WHERE name = 'CashTransactionReport';
 
 -- CATEGORIES
 INSERT INTO Category (Id, ParentId, Name)

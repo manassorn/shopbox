@@ -41,6 +41,14 @@ public abstract class BillDao<T extends Bill> extends Dao<T, Integer> {
 	protected BillDao(DbHelper dbHelper, Class<T> clazz) {
 		super(dbHelper, clazz);
 	}
+	
+	public double getSumTotal() {
+		Cursor cursor = queryBuilder().select("SUM(" + TOTAL + ")").query();
+		if(cursor == null || !cursor.moveToFirst()) {
+			return 0;
+		}
+		return cursor.getDouble(0);
+	}
 
 	public Cursor queryForToday() {
 		return queryBuilder().selectCursorId(ID)

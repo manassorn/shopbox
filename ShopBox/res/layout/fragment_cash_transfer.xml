@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin" >
+		
+		<TextView
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="มีเงินอยู่ในระบบ " />
+		<TextView
+		    android:id="@+id/current_cash"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:text="฿0.00" />
+		
+    </RelativeLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dee0e0" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin"
+        android:orientation="vertical" >
+	
+		<RadioGroup 
+		    android:id="@+id/cash_choice"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal">
+		    <RadioButton 
+		        android:id="@+id/radio_deposit"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="โอนเข้า" />
+		    <RadioButton 
+		        android:id="@+id/radio_withdraw"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="โอนออก" />
+		</RadioGroup>
+		<EditText 
+		    android:id="@+id/transfer_amount"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:inputType="numberDecimal"
+		    android:gravity="right"
+		    android:hint="จำนวนเงิน"/>
+		<Button 
+		    android:id="@+id/ok_button"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="right"
+		    android:text="ตกลง"/>
+    </LinearLayout>
+	
+</LinearLayout>

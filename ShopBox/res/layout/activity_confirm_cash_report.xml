@@ -1,0 +1,134 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/paper" >
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="#dddddd"
+	    android:paddingLeft="@dimen/activity_horizontal_margin" >
+        <TextView
+            android:id="@+id/footer_cash_remain_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:text="คงเหลือ" />
+        <TextView
+            android:id="@+id/footer_cash_remain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/footer_cash_remain_label" />
+        <Button
+            android:id="@+id/ok_button"
+	        style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:minWidth="80dp"
+            android:text="ยืนยัน " />
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+	    android:paddingBottom="@dimen/activity_vertical_margin"
+	    android:paddingLeft="@dimen/activity_horizontal_margin"
+	    android:paddingRight="@dimen/activity_horizontal_margin"
+	    android:paddingTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical" >
+
+        <com.manassorn.shopbox.PimpdeedTextView
+	        android:id="@+id/transaction_type"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:textSize="20sp"
+	        android:text="ใบโอนเงิน" />
+	    
+	    <FrameLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+        	<com.manassorn.shopbox.PimpdeedTextView
+        	    android:id="@+id/bill_id"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="#1XXXXXXXX" />
+        	<com.manassorn.shopbox.PimpdeedTextView
+        	    android:id="@+id/bill_created_time"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="right"
+	            android:text="09/03/2013 XX:XX" />
+	    </FrameLayout>
+		    
+	    <ImageView 
+	       android:layout_width="match_parent"
+	       android:layout_height="1dp"
+	       android:layout_marginBottom="8dp"
+	       android:src="@drawable/dash_divider"/>
+	    
+	    <RelativeLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+        	
+	       	<com.manassorn.shopbox.PimpdeedTextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="right"
+	            android:text="มีเงินอยู่ในระบบ" />
+	       	<com.manassorn.shopbox.PimpdeedTextView
+	       	    android:id="@+id/current_cash"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true" />
+	    </RelativeLayout>
+	    
+	    <RelativeLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+        	
+	       	<com.manassorn.shopbox.PimpdeedTextView
+	       	    android:id="@+id/transfer_type"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="right"
+	            android:textSize="18sp" />
+	       	<com.manassorn.shopbox.PimpdeedTextView
+	       	    android:id="@+id/amount"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:textSize="18sp" />
+	    </RelativeLayout>
+		    
+	    <ImageView 
+	       android:layout_width="match_parent"
+	       android:layout_height="1dp"
+	       android:layout_marginBottom="8dp"
+	       android:src="@drawable/dash_divider"/>
+        
+	    <RelativeLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+        	
+	       	<com.manassorn.shopbox.PimpdeedTextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="right"
+	            android:text="ยอดเงินคงเหลือ" />
+	       	<com.manassorn.shopbox.PimpdeedTextView
+	       	    android:id="@+id/cash_remain"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true" />
+	    </RelativeLayout>
+        
+    </LinearLayout>
+
+</RelativeLayout>

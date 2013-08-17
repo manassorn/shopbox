@@ -15,6 +15,8 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
 	private DeveloperMenuFragment developerMenuFragment;
 	private ReportsMenuFragment reportsMenuFragment;
 	private StatsFragment statsFragment;
+	private CashTransferFragment cashTransferFragment;
+	private CashMissingFragment cashMissingFragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
         String[] menus = getResources().getStringArray(R.array.drawer_cashier_array);
         drawerListView.setAdapter(new DrawerListArrayAdapter(this, menus));
         
-        replaceFragment(sellFragment());
+        replaceFragment(cashMissingFragment());
         
 //    	Intent intent = null;
 //    	intent = new Intent(this, ReportsActivity.class);
@@ -43,16 +45,22 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
         	case 2:
         		replaceFragment(returnMenuFragment());
         		break;
-        	case 13:
+        	case 9:
+        		replaceFragment(cashTransferFragment());
+        		break;
+        	case 10:
+        		replaceFragment(cashMissingFragment());
+        		break;
+        	case 12:
         		replaceFragment(reportsMenuFragment());
         		break;
-        	case 14:
+        	case 13:
         		replaceFragment(statsFragment());
         		break;
-        	case 15:
+        	case 14:
         		startPasscodeActivity();
         		break;
-        	case 17:
+        	case 16:
         		replaceFragment(developerMenuFragment());
         }
 	}
@@ -113,5 +121,19 @@ public class MainActivity extends DrawerFragmentActivity implements OnItemClickL
 			statsFragment = new StatsFragment();
 		}
 		return statsFragment;
+	}
+	
+	protected CashTransferFragment cashTransferFragment() {
+		if(cashTransferFragment == null) {
+			cashTransferFragment = new CashTransferFragment();
+		}
+		return cashTransferFragment;
+	}
+	
+	protected CashMissingFragment cashMissingFragment() {
+		if(cashMissingFragment == null) {
+			cashMissingFragment = new CashMissingFragment();
+		}
+		return cashMissingFragment;
 	}
 }
